@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/pie2">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linear2"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:id="@+id/relative_moment1"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_42sdp">
+
+                <TextView
+                    android:id="@+id/moment1"
+                    android:layout_width="@dimen/_84sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:ellipsize="end"
+                    android:maxLength="27"
+                    android:maxLines="2"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:scrollHorizontally="true"
+                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
+                    android:textSize="@dimen/_8sdp" />
+
+                <ImageView
+                    android:id="@+id/moment_file1"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_file_attached" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_moment2"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_42sdp">
+
+                <TextView
+                    android:id="@+id/moment2"
+                    android:layout_width="@dimen/_84sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:ellipsize="end"
+                    android:maxLength="27"
+                    android:maxLines="2"
+                    android:paddingRight="@dimen/_15sdp"
+                    android:scrollHorizontally="true"
+                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
+                    android:textSize="@dimen/_8sdp" />
+
+                <ImageView
+                    android:id="@+id/moment_file2"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_file_attached" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <RelativeLayout
+                android:id="@+id/relative_moment3"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_42sdp">
+
+                <TextView
+                    android:id="@+id/moment3"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:ellipsize="end"
+                    android:maxLength="27"
+                    android:maxLines="2"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:scrollHorizontally="true"
+                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
+                    android:textSize="@dimen/_8sdp" />
+
+                <ImageView
+                    android:id="@+id/moment_file3"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_file_attached" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_moment4"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_42sdp">
+
+                <TextView
+                    android:id="@+id/moment4"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:ellipsize="end"
+                    android:maxLength="27"
+                    android:maxLines="2"
+                    android:paddingStart="@dimen/_20sdp"
+                    android:scrollHorizontally="true"
+                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
+                    android:textSize="@dimen/_8sdp" />
+
+                <ImageView
+                    android:id="@+id/moment_file4"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_file_attached" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear2"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:id="@+id/relative_moment5"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_42sdp">
+
+                <TextView
+                    android:id="@+id/moment5"
+                    android:layout_width="@dimen/_84sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:ellipsize="end"
+                    android:maxLength="27"
+                    android:maxLines="2"
+                    android:paddingLeft="@dimen/_19sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:scrollHorizontally="true"
+                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjuuuoioouuouiuoiiukdhakjsdhkjadhkjashdkashdkajhdkashdas"
+                    android:textSize="@dimen/_8sdp" />
+
+                <ImageView
+                    android:id="@+id/moment_file5"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:contentDescription="attached image"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_file_attached" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_moment6"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_42sdp">
+
+                <TextView
+                    android:id="@+id/moment6"
+                    android:layout_width="@dimen/_84sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:ellipsize="end"
+                    android:maxLength="27"
+                    android:maxLines="2"
+                    android:paddingRight="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:scrollHorizontally="true"
+                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
+                    android:textSize="@dimen/_8sdp" />
+
+                <ImageView
+                    android:id="@+id/moment_file6"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_file_attached" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

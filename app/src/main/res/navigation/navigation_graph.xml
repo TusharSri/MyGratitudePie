@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/dashboard">
+
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.example.apple.navigationdemo.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/to_pieFragment"
+            app:destination="@id/pieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pieFragment"
+        android:name="com.example.apple.navigationdemo.PieFragment"
+        android:label="fragment_pie"
+        tools:layout="@layout/fragment_pie" >
+        <action
+            android:id="@+id/to_showMomentFragment"
+            app:destination="@id/showMomentFragment" />
+        <action
+            android:id="@+id/action_pieFragment_to_editMomentFragment"
+            app:destination="@id/editMomentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showMomentFragment"
+        android:name="com.example.apple.navigationdemo.ShowMomentFragment"
+        android:label="fragment_show_moment"
+        tools:layout="@layout/fragment_show_moment" >
+        <action
+            android:id="@+id/to_editMomentFragment"
+            app:destination="@id/editMomentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editMomentFragment"
+        android:name="com.example.apple.navigationdemo.EditMomentFragment"
+        android:label="fragment_edit_moment"
+        tools:layout="@layout/fragment_edit_moment" >
+        <action
+            android:id="@+id/to_pieFragment"
+            app:destination="@id/pieFragment" />
+    </fragment>
+</navigation>
