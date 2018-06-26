@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true">
 
             <TextView
-                android:id="@+id/date_textview"
+                android:id="@+id/date_edit_frag_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/_4sdp"
@@ -28,7 +28,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/day_textview"
+                android:id="@+id/day_edit_frag_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/_4sdp"
@@ -79,7 +79,7 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageview_file_added_preview"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -87,7 +87,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:contentDescription="@string/attach_moments"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/my_gratitude_pie"
             android:visibility="invisible" />
 

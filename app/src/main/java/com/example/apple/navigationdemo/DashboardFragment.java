@@ -101,7 +101,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
     //Initializing views here
     private void initViews() {
         calendarView = getActivity().findViewById(R.id.calendar);
-        calendarView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.pieFragment,bundle));
         thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
         gotoDate = getActivity().findViewById(R.id.button_goto_date);
         gotoDate.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +123,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                 Date dateObj = Calendar.getInstance().getTime();
                 try {
                     dateObj = curFormater.parse(dateStr);
+                    dateObj.setMonth(month);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -134,7 +134,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                 bundle.putString(getString(R.string.date), Constants.EMPTY_STRING + year + month + day);
                 bundle.putString(getString(R.string.formatted_date), date);
                 bundle.putString(getString(R.string.day), Constants.dayInWeek[dayNumber - 1]);
-                calendarView.callOnClick();
+                Navigation.findNavController(calendarView).navigate(R.id.pieFragment,bundle);
                 cuurrentDate = Constants.EMPTY_STRING + year + month + day;
             }
         });

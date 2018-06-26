@@ -3,6 +3,7 @@ package com.example.apple.navigationdemo.Database;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 /**
  * Creation of DAO object is done with this Interface
@@ -15,4 +16,7 @@ public interface PieChartDao {
 
     @Query("SELECT * FROM piechartdata WHERE date=:date")
     public PieChartData[] getPieChartData(String date);
+
+    @Update
+    void updatePie(PieChartData... pieChartData);
 }

@@ -25,6 +25,21 @@
         <action
             android:id="@+id/action_pieFragment_to_editMomentFragment"
             app:destination="@id/editMomentFragment" />
+        <argument
+            android:name="date"
+            app:type="string" />
+        <argument
+            android:name="formattedDate"
+            app:type="string" />
+        <argument
+            android:name="day"
+            app:type="string" />
+        <argument
+            android:name="moment_desc"
+            app:type="string" />
+        <argument
+            android:name="moment_attach_file"
+            app:type="string" />
     </fragment>
     <fragment
         android:id="@+id/showMomentFragment"
@@ -34,6 +49,21 @@
         <action
             android:id="@+id/to_editMomentFragment"
             app:destination="@id/editMomentFragment" />
+        <argument
+            android:name="date"
+            app:type="string" />
+        <argument
+            android:name="formattedDate"
+            app:type="string" />
+        <argument
+            android:name="day"
+            app:type="string" />
+        <argument
+            android:name="moment_desc"
+            app:type="string" />
+        <argument
+            android:name="moment_attach_file"
+            app:type="string" />
     </fragment>
     <fragment
         android:id="@+id/editMomentFragment"
@@ -43,5 +73,14 @@
         <action
             android:id="@+id/to_pieFragment"
             app:destination="@id/pieFragment" />
+        <argument
+            android:name="formattedDate"
+            app:type="string" />
+        <argument
+            android:name="day"
+            app:type="string" />
+        <argument
+            android:name="date"
+            app:type="string" />
     </fragment>
 </navigation>

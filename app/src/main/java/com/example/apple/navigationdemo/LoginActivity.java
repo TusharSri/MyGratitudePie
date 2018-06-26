@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog = new ProgressDialog(LoginActivity.this);
             mProgressDialog.setMessage("Loading");
             mProgressDialog.setIndeterminate(true);
         }

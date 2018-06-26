@@ -62,13 +62,4 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/share_imageview"
-        android:layout_width="@dimen/_33sdp"
-        android:layout_height="@dimen/_33sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/_17sdp"
-        android:background="@drawable/share_icon"
-        android:contentDescription="@string/sharing_icon" />
-
 </RelativeLayout>
