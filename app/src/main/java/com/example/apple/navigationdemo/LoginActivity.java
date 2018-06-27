@@ -89,14 +89,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            hideProgressDialog();
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-
             } else {
+                hideProgressDialog();
                 Snackbar.make(createMyGratitudeButton, R.string.login_failed, Snackbar.LENGTH_LONG).show();
             }
         }
@@ -108,8 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
+                        hideProgressDialog();
                         if (!task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), R.string.authentication_failed,
+                            Toast.makeText(getApplicationContext(), R.string.login_failed,
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             String name = mAuth.getCurrentUser().getDisplayName();
@@ -148,8 +148,13 @@ public class LoginActivity extends AppCompatActivity {
             mProgressDialog.setMessage("Loading");
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mProgressDialog.dismiss();
     }
 
     private void hideProgressDialog() {
