@@ -8,6 +8,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../GratitudePie-master/app/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../GratitudePie-master/app/src/main/res/menu/activity_calendar_drawer_drawer.xml">
           <value>
             <set />
@@ -34,6 +39,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/apple/navigationdemo/DashboardFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/apple/navigationdemo/Database/PieChartDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/apple/navigationdemo/Database/PieChartDatabase.java">
           <value>
             <set />
           </value>
@@ -69,6 +84,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/apple/navigationdemo/Utils/Constants.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/apple/navigationdemo/Utils/ConvertUriToFilePath.java">
           <value>
             <set />
           </value>
@@ -148,12 +168,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../social-selling-seller-android-app/app/src/androidTest/assets/MockResponse/GamificationList">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../social-selling-seller-android-app/app/src/main/java/com/avon/mobile/ss/seller/adapter/ProductRecyclerViewAdapter.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../social-selling-seller-android-app/app/src/main/java/com/avon/mobile/ss/seller/view/activity/CheckoutActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../social-selling-seller-android-app/app/src/main/java/com/avon/mobile/ss/seller/view/activity/CreateTripActivity.java">
           <value>
             <set />
           </value>
