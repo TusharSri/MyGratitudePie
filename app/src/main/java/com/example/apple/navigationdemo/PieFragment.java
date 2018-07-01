@@ -46,6 +46,7 @@ public class PieFragment extends Fragment implements View.OnClickListener{
     private String date;
     private int selectDateRequestCode = 191;
     private PieChartData[] pieChartData;
+    private boolean isNotEdited = true;
 
     public PieFragment() {
         // Required empty public constructor
@@ -97,7 +98,7 @@ public class PieFragment extends Fragment implements View.OnClickListener{
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                if (pieChartData.length == 0) {
+                if (pieChartData.length == 0 && isNotEdited) {
                     momentAttached();
                 }
                 mMomentDescription.clear();
@@ -194,6 +195,7 @@ public class PieFragment extends Fragment implements View.OnClickListener{
         bundle.putString(getString(R.string.day), day);
         bundle.putString(getString(R.string.formatted_date), formattedDate);
         bundle.putString(getString(R.string.date), date);
+        isNotEdited = false;
         Navigation.findNavController(attachMomentButton).navigate(R.id.editMomentFragment,bundle);
     }
 }

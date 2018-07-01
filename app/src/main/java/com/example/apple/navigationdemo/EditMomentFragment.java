@@ -178,7 +178,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
             AsyncTask asyncTask = new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    PieChartData pieChartData = new PieChartData(date, counter, momentAdded, url);
+                    PieChartData pieChartData = new PieChartData(date, counter+1, momentAdded, url);
                     PieChartDatabase.getInstance(getActivity())
                             .getPieChartDao()
                             .updatePie(pieChartData);
