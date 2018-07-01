@@ -5,6 +5,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -237,20 +239,30 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if(resultCode == RESULT_OK) {
+            if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
 
-            Uri uri = data.getData();
-            url = uri.toString();
-            attachFile = uri.toString();
-            fileAddedPreviewImageview.setImageURI(uri);
-            fileAddedPreviewImageview.setVisibility(View.VISIBLE);
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(projection[0]);
-                //url = cursor.getString(columnIndex); // returns null
-                cursor.close();
+                Uri uri = data.getData();
+                url = uri.toString();
+                attachFile = uri.toString();
+                fileAddedPreviewImageview.setVisibility(View.VISIBLE);
+                if (uri.toString().contains("image")) {
+                    //handle image
+                    fileAddedPreviewImageview.setImageURI(uri);
+                    String[] projection = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+                    if (cursor != null) {
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(projection[0]);
+                        //url = cursor.getString(columnIndex); // returns null
+                        cursor.close();
+                    }
+                } else  if (uri.toString().contains("video")) {
+                    //handle video
+                    Glide.with(getActivity())
+                            .load(attachFile) // or URI/path
+                            .into(fileAddedPreviewImageview);
+                }
             }
         }
     }
