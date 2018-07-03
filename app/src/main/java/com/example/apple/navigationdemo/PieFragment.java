@@ -102,6 +102,7 @@ public class PieFragment extends Fragment implements View.OnClickListener{
                     momentAttached();
                 }
                 mMomentDescription.clear();
+                mAttachUrl.clear();
                 for (int i = 0; i < pieChartData.length; i++) {
                     counter = pieChartData[i].getCounter();
                     if (counter > 0) {

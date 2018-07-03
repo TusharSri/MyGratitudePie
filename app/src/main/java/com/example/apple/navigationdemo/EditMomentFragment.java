@@ -109,12 +109,8 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
         if (attachDesc != null && !attachDesc.isEmpty()) {
             momentTextView.setText(attachDesc);
 
-            String actualFilepath = ConvertUriToFilePath.getPathFromURI(getActivity(), Uri.parse(attachFile));
-
-            Glide.with(this).load(actualFilepath)
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+            Glide.with(getActivity())
+                    .load(attachFile)
                     .into(fileAddedPreviewImageview);
             fileAddedPreviewImageview.setVisibility(View.VISIBLE);
         }
@@ -153,7 +149,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                 @Override
                 protected Void doInBackground(Void... voids) {
                     counter++;
-                    PieChartData pieChartData = new PieChartData(date, counter, momentAdded, url);
+                    PieChartData pieChartData = new PieChartData(date, counter, momentAdded, attachFile);
                     PieChartDatabase.getInstance(getActivity())
                             .getPieChartDao()
                             .insert(pieChartData);
@@ -178,7 +174,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
             AsyncTask asyncTask = new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    PieChartData pieChartData = new PieChartData(date, counter+1, momentAdded, url);
+                    PieChartData pieChartData = new PieChartData(date, counter+1, momentAdded, attachFile);
                     PieChartDatabase.getInstance(getActivity())
                             .getPieChartDao()
                             .updatePie(pieChartData);

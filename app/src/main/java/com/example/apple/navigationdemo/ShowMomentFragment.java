@@ -1,8 +1,10 @@
 package com.example.apple.navigationdemo;
 
 
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -81,14 +83,10 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
         showDate.setText(formattedDate);
         showDay.setText(day);
         showDescription.setText(attachDesc);
-        String actualFilepath= ConvertUriToFilePath.getPathFromURI(getActivity(),Uri.parse(attachFile));
 
-        Glide.with(this).load(actualFilepath)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(getActivity())
+                .load(attachFile)
                 .into(showImageAdded);
-
         showImageAdded.setVisibility(View.VISIBLE);
     }
 
@@ -108,9 +106,9 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
         bundle.putString(getString(R.string.date), date);
         bundle.putString(Constants.MOMENT_DESCRIPTION, attachDesc);
         bundle.putString(Constants.MOMENT_ATTACH_FILE, attachFile);
-        bundle.putBoolean(getString(R.string.isComingFromShowFragment),true);
+        bundle.putBoolean(getString(R.string.isComingFromShowFragment), true);
         bundle.putInt(getString(R.string.counter), counter);
         Navigation.findNavController(editMomentButton).popBackStack();
-        Navigation.findNavController(editMomentButton).navigate(R.id.editMomentFragment,bundle);
+        Navigation.findNavController(editMomentButton).navigate(R.id.editMomentFragment, bundle);
     }
 }
