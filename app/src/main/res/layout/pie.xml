@@ -4,8 +4,8 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/pie2">
 
@@ -18,12 +18,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_moment1"
-                android:layout_width="@dimen/_84sdp"
+                android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_42sdp">
 
                 <TextView
                     android:id="@+id/moment1"
-                    android:layout_width="@dimen/_84sdp"
+                    android:layout_width="@dimen/_74sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:ellipsize="end"
@@ -31,7 +31,6 @@
                     android:maxLines="2"
                     android:paddingStart="@dimen/_16sdp"
                     android:scrollHorizontally="true"
-                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
                     android:textSize="@dimen/_8sdp" />
 
                 <ImageView
@@ -48,12 +47,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_moment2"
-                android:layout_width="@dimen/_84sdp"
+                android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_42sdp">
 
                 <TextView
                     android:id="@+id/moment2"
-                    android:layout_width="@dimen/_84sdp"
+                    android:layout_width="@dimen/_74sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:ellipsize="end"
@@ -61,7 +60,6 @@
                     android:maxLines="2"
                     android:paddingRight="@dimen/_15sdp"
                     android:scrollHorizontally="true"
-                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
                     android:textSize="@dimen/_8sdp" />
 
                 <ImageView
@@ -86,7 +84,7 @@
 
             <RelativeLayout
                 android:id="@+id/relative_moment3"
-                android:layout_width="@dimen/_84sdp"
+                android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_42sdp">
 
                 <TextView
@@ -94,22 +92,22 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_alignParentStart="true"
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:ellipsize="end"
                     android:maxLength="27"
                     android:maxLines="2"
                     android:paddingRight="@dimen/_20sdp"
                     android:scrollHorizontally="true"
-                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
                     android:textSize="@dimen/_8sdp" />
 
                 <ImageView
                     android:id="@+id/moment_file3"
-                    android:layout_width="@dimen/_8sdp"
-                    android:layout_height="@dimen/_8sdp"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/_2sdp"
+                    android:layout_margin="@dimen/_6sdp"
                     android:visibility="invisible"
                     android:src="@drawable/ic_file_attached" />
 
@@ -117,7 +115,7 @@
 
             <RelativeLayout
                 android:id="@+id/relative_moment4"
-                android:layout_width="@dimen/_84sdp"
+                android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_42sdp">
 
                 <TextView
@@ -125,19 +123,19 @@
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:maxLength="27"
                     android:maxLines="2"
                     android:paddingStart="@dimen/_20sdp"
                     android:scrollHorizontally="true"
-                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
                     android:textSize="@dimen/_8sdp" />
 
                 <ImageView
                     android:id="@+id/moment_file4"
-                    android:layout_width="@dimen/_8sdp"
-                    android:layout_height="@dimen/_8sdp"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/_2sdp"
@@ -159,12 +157,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_moment5"
-                android:layout_width="@dimen/_84sdp"
+                android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_42sdp">
 
                 <TextView
                     android:id="@+id/moment5"
-                    android:layout_width="@dimen/_84sdp"
+                    android:layout_width="@dimen/_74sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:ellipsize="end"
@@ -173,7 +171,6 @@
                     android:paddingLeft="@dimen/_19sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:scrollHorizontally="true"
-                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjuuuoioouuouiuoiiukdhakjsdhkjadhkjashdkashdkajhdkashdas"
                     android:textSize="@dimen/_8sdp" />
 
                 <ImageView
@@ -190,12 +187,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_moment6"
-                android:layout_width="@dimen/_84sdp"
+                android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_42sdp">
 
                 <TextView
                     android:id="@+id/moment6"
-                    android:layout_width="@dimen/_84sdp"
+                    android:layout_width="@dimen/_74sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:ellipsize="end"
@@ -204,7 +201,6 @@
                     android:paddingRight="@dimen/_16sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:scrollHorizontally="true"
-                    android:text="ndaksdkjadhakjdkashdkashdkhaskdhasjkdhakjsdhkjadhkjashdkashdkajhdkashdas"
                     android:textSize="@dimen/_8sdp" />
 
                 <ImageView

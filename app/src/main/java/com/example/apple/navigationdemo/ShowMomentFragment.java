@@ -88,6 +88,7 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
                 .load(attachFile)
                 .into(showImageAdded);
         showImageAdded.setVisibility(View.VISIBLE);
+        showImageAdded.setOnClickListener(this);
     }
 
     @Override
@@ -96,7 +97,16 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
             case R.id.button_edit_show_moment:
                 editMoment();
                 break;
+            case R.id.imageview_file_show_added_preview:
+                openImagePreviewDailog();
+                break;
         }
+    }
+
+    private void openImagePreviewDailog() {
+        ImagePreviewDialog imagePreviewDialog = new ImagePreviewDialog(getActivity(), attachFile);
+        imagePreviewDialog.setCanceledOnTouchOutside(true);
+        imagePreviewDialog.show();
     }
 
     private void editMoment() {
