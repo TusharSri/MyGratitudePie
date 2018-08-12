@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gratitude_login_backg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/date_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:background="@drawable/rect_top_pie_chart_screen"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/date_edit_frag_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_4sdp"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/day_edit_frag_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_4sdp"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageview_my_gratitude_pie"
+            android:layout_width="@dimen/_190sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_below="@+id/date_linear_layout"
+            android:background="@drawable/ic_logo_main"
+            android:contentDescription="@string/icon"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_moment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageview_my_gratitude_pie"
+            android:layout_marginEnd="@dimen/_42sdp"
+            android:layout_marginStart="@dimen/_42sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/button_drawable"
+            android:padding="@dimen/_1sdp"
+            android:textColorHint="@android:color/white"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+
+            <EditText
+                android:id="@+id/edit_text_moment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/attach_moments"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:singleLine="true"
+                android:maxLength="100"
+                android:ems="10"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageview_file_added_preview"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_below="@+id/text_input_moment"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:contentDescription="@string/attach_moments"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my_gratitude_pie"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/button_add_file"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_34sdp"
+            android:layout_below="@+id/imageview_file_added_preview"
+            android:layout_marginEnd="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:background="@drawable/button_drawable"
+            android:text="@string/attach_file"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button_add_moment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@+id/button_add_file"
+            android:layout_marginEnd="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:background="@drawable/button_drawable"
+            android:text="@string/add_moment"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+</ScrollView>

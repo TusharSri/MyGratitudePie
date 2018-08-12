@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gratitude_login_backg">
+
+    <LinearLayout
+        android:id="@+id/date_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_45sdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rect_top_pie_chart_screen"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/date_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_4sdp"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/day_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_4sdp"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/icon_imageview"
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_below="@+id/date_linear_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@drawable/ic_logo_main"
+        android:contentDescription="@string/icon" />
+
+    <include
+        layout="@layout/pie"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/icon_imageview"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/attach_moment_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_41sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_marginEnd="@dimen/_33sdp"
+        android:layout_marginStart="@dimen/_33sdp"
+        android:background="@drawable/attach_moments_button"
+        android:text="@string/attach_moments"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
