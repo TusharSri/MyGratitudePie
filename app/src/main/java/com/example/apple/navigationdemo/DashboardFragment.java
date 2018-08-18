@@ -35,12 +35,13 @@ import androidx.navigation.Navigation;
  */
 public class DashboardFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
 
-    CalendarView calendarView;
-    TextView thingsIAmGreatfulForTextView;
-    Button gotoDate;
+    private CalendarView calendarView;
+    private TextView thingsIAmGreatfulForTextView;
+    private Button gotoDate;
     private int counter;
     private String cuurrentDate;
     private Bundle bundle;
+    boolean doubleBackToExitPressedOnce = false;
 
     public DashboardFragment() {
         // Required empty public constructor

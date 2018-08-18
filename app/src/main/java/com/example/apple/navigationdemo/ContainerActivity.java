@@ -8,10 +8,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,11 +19,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,32 +35,35 @@ import java.util.Date;
 public class ContainerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-    boolean doubleBackToExitPressedOnce = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
-        toolbar.setTitle("Calendar");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ImageView sharingImage = findViewById(R.id.sharing_imageview);
+        sharingImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sharingButtonClicked(view);
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        ImageView drawerIcon = findViewById(R.id.drawer_icon_imageview);
+        drawerIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -100,21 +101,6 @@ public class ContainerActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-           /* if (doubleBackToExitPressedOnce) {
-                overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
-                super.onBackPressed();
-                return;
-            }
-
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, R.string.please_click_again_to_exit, Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);*/
         }
     }
 
@@ -177,10 +163,20 @@ public class ContainerActivity extends AppCompatActivity
     private void takeScreenshotAndShare() {
         String Slash = "/";
         String jpgExtension = ".jpg";
+        String gratitudePie = "GratitudePie";
         Date currentDate = new Date();
         android.text.format.DateFormat.format(Constants.DATE_FORMAT, currentDate);
         // image naming and path  to include sd card  appending name you choose for file
-        String mPath = Environment.getExternalStorageDirectory().toString() + Slash + currentDate + jpgExtension;
+        File direct =
+                new File(Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        .getAbsolutePath() + Slash + gratitudePie + Slash);
+
+        if (!direct.exists()) {
+            direct.mkdir();
+        }
+
+        String mPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + Slash + gratitudePie + Slash + currentDate + jpgExtension;
         mPath = mPath.replace(Constants.SPACE_STRING, Constants.EMPTY_STRING);
         // create bitmap screen capture
         View v1 = getWindow().getDecorView().getRootView();

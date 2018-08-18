@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gratitude_login_backg">
+    android:background="@drawable/ic_gratitude_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_height="@dimen/_50sdp"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:background="@drawable/rect_top_pie_chart_screen"
+            android:background="@drawable/ic_top_rect"
             android:layout_centerHorizontal="true">
 
             <TextView
@@ -40,12 +40,12 @@
 
         <ImageView
             android:id="@+id/imageview_my_gratitude_pie"
-            android:layout_width="@dimen/_190sdp"
+            android:layout_width="@dimen/_240sdp"
             android:layout_height="@dimen/_100sdp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_below="@+id/date_linear_layout"
-            android:background="@drawable/ic_logo_main"
+            android:background="@drawable/ic_my_gratitude_pie"
             android:contentDescription="@string/icon"
             android:focusable="true"
             android:focusableInTouchMode="true"/>
@@ -90,7 +90,7 @@
             android:layout_marginTop="@dimen/_17sdp"
             android:contentDescription="@string/attach_moments"
             android:scaleType="centerCrop"
-            android:src="@drawable/my_gratitude_pie"
+            android:src="@drawable/ic_my_gratitude_pie"
             android:visibility="invisible" />
 
         <Button

@@ -3,12 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gratitude_login_backg"
+    android:background="@drawable/ic_gratitude_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/screen_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_45sdp"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@android:color/white"
+        android:text="@string/calender"
+        android:gravity="center_vertical"
+        android:layout_centerHorizontal="true"/>
 
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@+id/screen_title"
         android:layout_height="wrap_content"/>
 
     <TextView
@@ -17,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_16sdp"
         android:textColor="@android:color/white"
-        android:text="No Enter on this day"
+        android:text="@string/no_enter_on_this_day"
         android:layout_below="@+id/calendar"
         android:layout_centerHorizontal="true"/>
 

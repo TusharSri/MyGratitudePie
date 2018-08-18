@@ -26,8 +26,8 @@
     <string name="empty">empty</string>
     <string name="day">day</string>
     <string name="url">url</string>
-    <string name="shared_content_body">Here is the share content body</string>
-    <string name="shared_content_subject">Subject Here</string>
+    <string name="shared_content_body">This is the best daily journel app.</string>
+    <string name="shared_content_subject">Shared by My Gratitude Pie</string>
     <string name="share_via">Share via</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -58,4 +58,6 @@
     <string name="permission_for_calendar">Need permission to add event to calendar</string>
     <string name="getTimeInMili">getTimeinMili</string>
     <string name="show_image">shownImage</string>
+    <string name="calender">Calender</string>
+    <string name="no_enter_on_this_day">No Enter on this day</string>
 </resources>

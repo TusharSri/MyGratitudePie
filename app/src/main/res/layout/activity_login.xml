@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gratitude_login_backg"
+    android:background="@drawable/ic_gratitude_background"
     android:padding="20dp">
 
     <ImageView
@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/icon"
         android:layout_margin="50dp"
-        android:src="@drawable/splash_screen_logo" />
+        android:src="@drawable/ic_splash_screen_logo" />
 
     <TextView
         android:id="@+id/daily_journel_textview"

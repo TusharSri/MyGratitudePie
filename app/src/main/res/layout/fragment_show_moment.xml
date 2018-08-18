@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gratitude_login_backg">
+    android:background="@drawable/ic_gratitude_background">
 
     <LinearLayout
         android:id="@+id/date_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_45sdp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/rect_top_pie_chart_screen"
+        android:background="@drawable/ic_top_rect"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -57,7 +57,7 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/attach_moments"
         android:scaleType="centerCrop"
-        android:src="@drawable/my_gratitude_pie"
+        android:src="@drawable/ic_my_gratitude_pie"
         android:visibility="invisible" />
 
     <Button

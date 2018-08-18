@@ -15,7 +15,7 @@ public interface PieChartDao {
     void insert(PieChartData... pieChartData);
 
     @Query("SELECT * FROM piechartdata WHERE date=:date")
-    public PieChartData[] getPieChartData(String date);
+    PieChartData[] getPieChartData(String date);
 
     @Update
     void updatePie(PieChartData... pieChartData);
