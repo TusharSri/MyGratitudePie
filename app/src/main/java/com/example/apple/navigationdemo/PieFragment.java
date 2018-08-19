@@ -28,8 +28,7 @@ import androidx.navigation.Navigation;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PieFragment extends Fragment implements View.OnClickListener{
-
+public class PieFragment extends Fragment implements View.OnClickListener {
 
     Button attachMomentButton;
     TextView dayOfMonthTextView;
@@ -40,13 +39,11 @@ public class PieFragment extends Fragment implements View.OnClickListener{
     TextView moment3;
     TextView moment4;
     TextView moment5;
-    TextView moment6;
     ImageView momentFile1;
     ImageView momentFile2;
     ImageView momentFile3;
     ImageView momentFile4;
     ImageView momentFile5;
-    ImageView momentFile6;
     private String formattedDate;
     private String day;
     private int counter = 0;
@@ -77,7 +74,7 @@ public class PieFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        if (counter >= 6) {
+        if (counter >= 5) {
             attachMomentButton.setVisibility(View.GONE);
         }
         initViews();
@@ -86,8 +83,9 @@ public class PieFragment extends Fragment implements View.OnClickListener{
 
     //Initializing Views here
     private void initViews() {
+        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
         RelativeLayout pieLayout = getActivity().findViewById(R.id.relative_pie);
-        Animation aniSlide = AnimationUtils.loadAnimation(getContext(),R.anim.zoom_in);
+        Animation aniSlide = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
         pieLayout.startAnimation(aniSlide);
         attachMomentButton = getActivity().findViewById(R.id.attach_moment_button);
         attachMomentButton.setOnClickListener(this);
@@ -98,14 +96,12 @@ public class PieFragment extends Fragment implements View.OnClickListener{
         moment3 = getActivity().findViewById(R.id.moment3);
         moment4 = getActivity().findViewById(R.id.moment4);
         moment5 = getActivity().findViewById(R.id.moment5);
-        moment6 = getActivity().findViewById(R.id.moment6);
 
         momentFile1 = getActivity().findViewById(R.id.moment_file1);
         momentFile2 = getActivity().findViewById(R.id.moment_file2);
         momentFile3 = getActivity().findViewById(R.id.moment_file3);
         momentFile4 = getActivity().findViewById(R.id.moment_file4);
         momentFile5 = getActivity().findViewById(R.id.moment_file5);
-        momentFile6 = getActivity().findViewById(R.id.moment_file6);
 
         day = getArguments().getString(getString(R.string.day));
         date = getArguments().getString(getString(R.string.date));
@@ -130,9 +126,9 @@ public class PieFragment extends Fragment implements View.OnClickListener{
                     if (counter > 0) {
                         mMomentDescription.add(pieChartData[i].getMomentDesc());
                         mAttachUrl.add(pieChartData[i].getAttachedUrl());
-                        setValues(mMomentDescription);
+                        setValues(mMomentDescription, mAttachUrl);
                     }
-                    if (counter >= 6) {
+                    if (counter >= 5) {
                         attachMomentButton.setVisibility(View.GONE);
                     }
                 }
@@ -148,36 +144,41 @@ public class PieFragment extends Fragment implements View.OnClickListener{
         }.execute();
     }
 
-    public void setValues(ArrayList<String> val) {
+    public void setValues(ArrayList<String> val, ArrayList<String> url) {
         if (val.size() >= 1) {
             moment1.setText(val.get(0));
-            momentFile1.setVisibility(View.VISIBLE);
+            if (url.size() >= 1 && url.get(0)!= null) {
+                momentFile1.setVisibility(View.VISIBLE);
+            }
             getActivity().findViewById(R.id.relative_moment1).setOnClickListener(this);
         }
         if (val.size() >= 2) {
             moment2.setText(val.get(1));
-            momentFile2.setVisibility(View.VISIBLE);
+            if (url.size() >= 2 && url.get(1)!= null) {
+                momentFile2.setVisibility(View.VISIBLE);
+            }
             getActivity().findViewById(R.id.relative_moment2).setOnClickListener(this);
         }
         if (val.size() >= 3) {
             moment3.setText(val.get(2));
-            momentFile3.setVisibility(View.VISIBLE);
+            if (url.size() >= 3 && url.get(2)!= null) {
+                momentFile3.setVisibility(View.VISIBLE);
+            }
             getActivity().findViewById(R.id.relative_moment3).setOnClickListener(this);
         }
         if (val.size() >= 4) {
             moment4.setText(val.get(3));
-            momentFile4.setVisibility(View.VISIBLE);
+            if (url.size() >= 4 && url.get(3)!= null) {
+                momentFile4.setVisibility(View.VISIBLE);
+            }
             getActivity().findViewById(R.id.relative_moment4).setOnClickListener(this);
         }
         if (val.size() >= 5) {
             moment5.setText(val.get(4));
-            momentFile5.setVisibility(View.VISIBLE);
+            if (url.size() >= 5 && url.get(4)!= null) {
+                momentFile5.setVisibility(View.VISIBLE);
+            }
             getActivity().findViewById(R.id.relative_moment5).setOnClickListener(this);
-        }
-        if (val.size() >= 6) {
-            moment6.setText(val.get(5));
-            momentFile6.setVisibility(View.VISIBLE);
-            getActivity().findViewById(R.id.relative_moment6).setOnClickListener(this);
         }
     }
 
@@ -199,9 +200,6 @@ public class PieFragment extends Fragment implements View.OnClickListener{
             case R.id.relative_moment5:
                 showMomentActivity(4);
                 break;
-            case R.id.relative_moment6:
-                showMomentActivity(5);
-                break;
             case R.id.attach_moment_button:
                 momentAttached();
                 break;
@@ -217,7 +215,7 @@ public class PieFragment extends Fragment implements View.OnClickListener{
         bundle.putString(getString(R.string.date), date);
         bundle.putLong(getString(R.string.getTimeInMili), getTimeInMili);
         bundle.putInt(getString(R.string.counter), i);
-        Navigation.findNavController(attachMomentButton).navigate(R.id.showMomentFragment,bundle);
+        Navigation.findNavController(attachMomentButton).navigate(R.id.showMomentFragment, bundle);
     }
 
     public void momentAttached() {
@@ -227,6 +225,6 @@ public class PieFragment extends Fragment implements View.OnClickListener{
         bundle.putString(getString(R.string.date), date);
         bundle.putLong(getString(R.string.getTimeInMili), getTimeInMili);
         isNotEdited = false;
-        Navigation.findNavController(attachMomentButton).navigate(R.id.editMomentFragment,bundle);
+        Navigation.findNavController(attachMomentButton).navigate(R.id.editMomentFragment, bundle);
     }
 }

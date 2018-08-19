@@ -86,11 +86,13 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
         showDay.setText(day);
         showDescription.setText(attachDesc);
 
-        Glide.with(getActivity())
-                .load(attachFile)
-                .into(showImageAdded);
-        showImageAdded.setVisibility(View.VISIBLE);
-        showImageAdded.setOnClickListener(this);
+        if(attachFile != null && !attachFile.isEmpty() && !attachFile.contains("null")) {
+            Glide.with(getActivity())
+                    .load(attachFile)
+                    .into(showImageAdded);
+            showImageAdded.setVisibility(View.VISIBLE);
+            showImageAdded.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -100,12 +102,12 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
                 editMoment();
                 break;
             case R.id.imageview_file_show_added_preview:
-                openImagePreviewDailog();
+                openImagePreviewActivity();
                 break;
         }
     }
 
-    private void openImagePreviewDailog() {
+    private void openImagePreviewActivity() {
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.show_image), attachFile);
         Navigation.findNavController(editMomentButton).navigate(R.id.showImageFragment, bundle);

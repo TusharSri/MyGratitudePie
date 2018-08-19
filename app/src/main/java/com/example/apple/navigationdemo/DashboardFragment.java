@@ -58,7 +58,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fetchDataFromDB();
-        initViews();
     }
 
     @Override
@@ -69,6 +68,12 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         calendarView.setDate(calendar.getTimeInMillis());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initViews();
     }
 
     private void fetchDataFromDB() {
@@ -101,6 +106,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
 
     //Initializing views here
     private void initViews() {
+        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         calendarView = getActivity().findViewById(R.id.calendar);
         thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
         gotoDate = getActivity().findViewById(R.id.button_goto_date);
