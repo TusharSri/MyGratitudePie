@@ -12,7 +12,7 @@
         android:layout_height="@dimen/_45sdp"
         android:textSize="@dimen/_16sdp"
         android:textColor="@android:color/white"
-        android:text="@string/calender"
+        android:text="@string/attach_moments"
         android:gravity="center_vertical"
         android:layout_centerHorizontal="true"/>
 

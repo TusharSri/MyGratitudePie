@@ -4,13 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -21,6 +19,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,8 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-    ImageView icon;
+    private ImageView icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initViews() {
         icon = findViewById(R.id.heading_immageview);
+        FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
         // Creating and Configuring Google Sign In object.
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -79,8 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), ContainerActivity.class));
                     finish();
                 } else {
-                    // User is signed out
-
+                    hideProgressDialog();
+                    Snackbar.make(icon, R.string.login_failed, Snackbar.LENGTH_LONG).show();
                 }
             }
         };
@@ -95,7 +94,12 @@ public class LoginActivity extends AppCompatActivity {
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
+                if(account != null){
+                    firebaseAuthWithGoogle(account);
+                } else {
+                    hideProgressDialog();
+                    Snackbar.make(icon, R.string.login_failed, Snackbar.LENGTH_LONG).show();
+                }
             } else {
                 hideProgressDialog();
                 Snackbar.make(icon, R.string.login_failed, Snackbar.LENGTH_LONG).show();
