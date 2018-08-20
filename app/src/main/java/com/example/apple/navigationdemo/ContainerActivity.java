@@ -35,6 +35,8 @@ import java.util.Date;
 public class ContainerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ImageView drawerIcon;
+    private ImageView sharingImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class ContainerActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
 
-        ImageView sharingImage = findViewById(R.id.sharing_imageview);
+        sharingImage = findViewById(R.id.sharing_imageview);
         sharingImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +59,7 @@ public class ContainerActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ImageView drawerIcon = findViewById(R.id.drawer_icon_imageview);
+        drawerIcon = findViewById(R.id.drawer_icon_imageview);
         drawerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +145,8 @@ public class ContainerActivity extends AppCompatActivity
     public void sharingButtonClicked(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             takeScreenshotAndShare();
+            drawerIcon.setVisibility(View.VISIBLE);
+            sharingImage.setVisibility(View.VISIBLE);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 Snackbar.make(view, R.string.need_pemission_to_show_pic, Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
@@ -161,6 +165,8 @@ public class ContainerActivity extends AppCompatActivity
      * Here er are creating bitmap of current activity and storing it into phone and shaing it via any app which support image
      */
     private void takeScreenshotAndShare() {
+        drawerIcon.setVisibility(View.GONE);
+        sharingImage.setVisibility(View.GONE);
         String Slash = "/";
         String jpgExtension = ".jpg";
         String gratitudePie = "GratitudePie";

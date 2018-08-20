@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
 
     private void initViews() {
         momentTextView = getActivity().findViewById(R.id.edit_text_moment);
+        momentTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         fileAddedPreviewImageview = getActivity().findViewById(R.id.imageview_file_added_preview);
         addFileButton = getActivity().findViewById(R.id.button_add_file);
         attachMomentButton = getActivity().findViewById(R.id.button_add_moment);

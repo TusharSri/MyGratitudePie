@@ -135,7 +135,7 @@
             <RelativeLayout
                 android:id="@+id/relative_moment5"
                 android:layout_width="@dimen/_41sdp"
-                android:layout_height="@dimen/_48sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_80sdp"
                 android:layout_toRightOf="@id/relative_moment3">
 
@@ -144,6 +144,7 @@
                     android:layout_width="@dimen/_42sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:ellipsize="end"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:maxLength="37"
                     android:maxLines="3"
                     android:layout_below="@+id/moment_file5"
