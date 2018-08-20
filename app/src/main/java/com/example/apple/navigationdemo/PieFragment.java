@@ -147,35 +147,35 @@ public class PieFragment extends Fragment implements View.OnClickListener {
     public void setValues(ArrayList<String> val, ArrayList<String> url) {
         if (val.size() >= 1) {
             moment1.setText(val.get(0));
-            if (url.size() >= 1 && url.get(0)!= null) {
+            if (url.size() >= 1 && url.get(0)!= null && !url.get(0).contains("null")) {
                 momentFile1.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment1).setOnClickListener(this);
         }
         if (val.size() >= 2) {
             moment2.setText(val.get(1));
-            if (url.size() >= 2 && url.get(1)!= null) {
+            if (url.size() >= 2 && url.get(1)!= null && !url.get(0).contains("null")) {
                 momentFile2.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment2).setOnClickListener(this);
         }
         if (val.size() >= 3) {
             moment3.setText(val.get(2));
-            if (url.size() >= 3 && url.get(2)!= null) {
+            if (url.size() >= 3 && url.get(2)!= null && !url.get(0).contains("null")) {
                 momentFile3.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment3).setOnClickListener(this);
         }
         if (val.size() >= 4) {
             moment4.setText(val.get(3));
-            if (url.size() >= 4 && url.get(3)!= null) {
+            if (url.size() >= 4 && url.get(3)!= null && !url.get(0).contains("null")) {
                 momentFile4.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment4).setOnClickListener(this);
         }
         if (val.size() >= 5) {
             moment5.setText(val.get(4));
-            if (url.size() >= 5 && url.get(4)!= null) {
+            if (url.size() >= 5 && url.get(4)!= null && !url.get(0).contains("null")) {
                 momentFile5.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment5).setOnClickListener(this);
