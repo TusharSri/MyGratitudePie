@@ -35,7 +35,7 @@
                     android:layout_toRightOf="@+id/moment1"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:src="@drawable/ic_file_attached" />
 
             </RelativeLayout>
@@ -66,7 +66,7 @@
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_below="@+id/moment2"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:src="@drawable/ic_file_attached" />
 
             </RelativeLayout>
@@ -96,7 +96,7 @@
                     android:layout_height="@dimen/_10sdp"
                     android:layout_toRightOf="@+id/moment3"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:src="@drawable/ic_file_attached" />
 
             </RelativeLayout>
@@ -127,7 +127,7 @@
                     android:layout_height="@dimen/_10sdp"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:src="@drawable/ic_file_attached" />
 
             </RelativeLayout>
@@ -159,8 +159,8 @@
                     android:contentDescription="attached image"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_6sdp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:src="@drawable/ic_file_attached" />
-            </RelativeLayout>l̥
+            </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.apple.navigationdemo;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,17 +30,20 @@ import java.util.TimeZone;
 
 import androidx.navigation.Navigation;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * Dashboard Fragment where user can see calendar and choose date
  */
-public class DashboardFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
+public class DashboardFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private CalendarView calendarView;
     private TextView thingsIAmGreatfulForTextView;
     private Button gotoDate;
     private int counter;
-    private String cuurrentDate;
+    private String currentDate;
+    private String currentDateWithoutZero;
     private Bundle bundle;
     boolean doubleBackToExitPressedOnce = false;
 
@@ -57,7 +61,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fetchDataFromDB();
     }
 
     @Override
@@ -73,6 +76,18 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
     @Override
     public void onResume() {
         super.onResume();
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE);
+        currentDate = prefs.getString("currentDate", null);
+        if(currentDate != null) {
+            String month = currentDate.substring(4, 6);
+            if (month.contains("0")) {
+                month = month.replace("0", "");
+                currentDateWithoutZero = currentDate.substring(0, 4) + month + currentDate.substring(6);
+            } else {
+                currentDateWithoutZero = currentDate;
+            }
+        }
+        fetchDataFromDB();
         initViews();
     }
 
@@ -98,7 +113,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
             protected Void doInBackground(Void... voids) {
                 pieChartData = PieChartDatabase.getInstance(getActivity())
                         .getPieChartDao()
-                        .getPieChartData(cuurrentDate);
+                        .getPieChartData(currentDateWithoutZero);
                 return null;
             }
         }.execute();
@@ -119,7 +134,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        cuurrentDate = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarV, int year, int month, int day) {
@@ -142,11 +156,30 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                 bundle.putLong(getString(R.string.getTimeInMili), calendar.getTimeInMillis());
                 bundle.putString(getString(R.string.formatted_date), date);
                 bundle.putString(getString(R.string.day), Constants.dayInWeek[dayNumber - 1]);
-                Navigation.findNavController(calendarView).navigate(R.id.pieFragment,bundle);
-                cuurrentDate = Constants.EMPTY_STRING + year + month + day;
+                Navigation.findNavController(calendarView).navigate(R.id.pieFragment, bundle);
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
+                month = month+1;
+                if(month >0 && month  <10){
+                    editor.putString("currentDate", Constants.EMPTY_STRING + year + "0" +month + day);
+                } else {
+                    editor.putString("currentDate", Constants.EMPTY_STRING + year + month + day);
+                }
+                editor.apply();
             }
         });
 
+        // If counter is not null the assign it and set date
+        if (currentDate != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, Integer.parseInt(currentDate.substring(0,4)));
+            calendar.set(Calendar.MONTH, Integer.parseInt(currentDate.substring(4,6))-1);
+            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(currentDate.substring(6)));
+            calendarView.setDate(calendar.getTimeInMillis());
+        }
+
+        /**
+         * Setting date in calendar from date picker
+         */
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override

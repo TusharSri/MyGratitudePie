@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,10 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        onGratitudeButtonClick();
     }
 
-    public void onGratitudeButtonClick() {
+    public void googleSignInStarts() {
         showProgressDialog();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -49,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initViews() {
         icon = findViewById(R.id.heading_immageview);
+        Animation aniSlide = AnimationUtils.loadAnimation(this, R.anim.splash_animation);
+        icon.startAnimation(aniSlide);
+
         FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
         // Creating and Configuring Google Sign In object.
@@ -76,10 +81,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     startActivity(new Intent(getApplicationContext(), ContainerActivity.class));
+                    hideProgressDialog();
                     finish();
                 } else {
-                    hideProgressDialog();
-                    Snackbar.make(icon, R.string.login_failed, Snackbar.LENGTH_LONG).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            googleSignInStarts();
+                        }
+                    }, 3000);
                 }
             }
         };
@@ -94,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                if(account != null){
+                if (account != null) {
                     firebaseAuthWithGoogle(account);
                 } else {
                     hideProgressDialog();
@@ -149,18 +159,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(LoginActivity.this);
-            mProgressDialog.setMessage("Loading");
-            mProgressDialog.setIndeterminate(true);
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = new ProgressDialog(LoginActivity.this);
+                mProgressDialog.setMessage("Loading");
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mProgressDialog.show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mProgressDialog.dismiss();
+        try {
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void hideProgressDialog() {

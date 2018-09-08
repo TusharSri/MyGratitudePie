@@ -14,6 +14,7 @@ public class Constants {
     public static final String SPACE_STRING = " ";
     public static final String INPUT_TYPE = "*/*";
     public static final String MAIL_TO = "mailto:";
+    public static final String CURRENT_DATE_PREF = "current_date";
     public static final String EMAIL_ID = "mygratitudepie@gmail.com";
     public static final String DATE_FORMAT = "yyyy-MM-dd_hh:mm:ss";
     public static final String dayInWeek[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};

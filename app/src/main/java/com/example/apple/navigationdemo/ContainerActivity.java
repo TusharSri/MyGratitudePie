@@ -29,6 +29,8 @@ import com.example.apple.navigationdemo.Utils.Constants;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -44,6 +46,10 @@ public class ContainerActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
+
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
+        editor.putString("currentDate", new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()));
+        editor.apply();
 
         sharingImage = findViewById(R.id.sharing_imageview);
         sharingImage.setOnClickListener(new View.OnClickListener() {
