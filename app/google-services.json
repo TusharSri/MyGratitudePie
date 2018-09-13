@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:931743178462:android:766be50ed7587523",
         "android_client_info": {
-          "package_name": "com.example.apple.navigationdemo"
+          "package_name": "com.example.apple.gratpie"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "931743178462-dabtpr0m890ncm6peeq08k9uqo3beqjl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.apple.navigationdemo",
+            "package_name": "com.example.apple.gratpie",
             "certificate_hash": "eb11990ea24c2a6ccab4821891f75aa238df1aa4"
           }
         },

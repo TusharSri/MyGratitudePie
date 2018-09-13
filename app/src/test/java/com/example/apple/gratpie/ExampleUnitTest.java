@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 import org.junit.Test;
 

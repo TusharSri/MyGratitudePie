@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.apple.navigationdemo">
+    package="com.example.apple.gratpie">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,11 +15,16 @@
         android:roundIcon="@drawable/ic_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="net.hockeyapp.android.appIdentifier"
+            android:value="@string/hockey_api_key" />
+
         <activity
-            android:name=".ContainerActivity"
+            android:name="com.example.apple.gratpie.ContainerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.apple.gratpie.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrivacyPolicyActivity"/>
+        <activity android:name="com.example.apple.gratpie.PrivacyPolicyActivity"/>
     </application>
 
 </manifest>

@@ -1,10 +1,7 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,11 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.apple.navigationdemo.Utils.Constants;
-import com.example.apple.navigationdemo.Utils.ConvertUriToFilePath;
-
-import java.io.File;
+import com.example.apple.gratpie.Utils.Constants;
 
 import androidx.navigation.Navigation;
 

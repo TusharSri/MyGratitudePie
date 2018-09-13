@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboard"
-        android:name="com.example.apple.navigationdemo.DashboardFragment"
+        android:name="com.example.apple.gratpie.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/pieFragment"
-        android:name="com.example.apple.navigationdemo.PieFragment"
+        android:name="com.example.apple.gratpie.PieFragment"
         android:label="fragment_pie"
         tools:layout="@layout/fragment_pie" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/showMomentFragment"
-        android:name="com.example.apple.navigationdemo.ShowMomentFragment"
+        android:name="com.example.apple.gratpie.ShowMomentFragment"
         android:label="fragment_show_moment"
         tools:layout="@layout/fragment_show_moment" >
         <action
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/editMomentFragment"
-        android:name="com.example.apple.navigationdemo.EditMomentFragment"
+        android:name="com.example.apple.gratpie.EditMomentFragment"
         android:label="fragment_edit_moment"
         tools:layout="@layout/fragment_edit_moment" >
         <action
@@ -85,7 +85,7 @@
     </fragment>
     <fragment
         android:id="@+id/showImageFragment"
-        android:name="com.example.apple.navigationdemo.ShowImageFragment"
+        android:name="com.example.apple.gratpie.ShowImageFragment"
         android:label="fragment_show_image"
         tools:layout="@layout/fragment_show_image" >
         <argument
@@ -95,7 +95,7 @@
 
     <fragment
         android:id="@+id/aboutUsFragment"
-        android:name="com.example.apple.navigationdemo.AboutUsFragment"
+        android:name="com.example.apple.gratpie.AboutUsFragment"
         android:label="fragment_about_us"
         tools:layout="@layout/fragment_about_us" >
     </fragment>

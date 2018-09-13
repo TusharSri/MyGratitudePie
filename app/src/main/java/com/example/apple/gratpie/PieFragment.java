@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 
 import android.os.AsyncTask;
@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.apple.navigationdemo.Database.PieChartData;
-import com.example.apple.navigationdemo.Database.PieChartDatabase;
-import com.example.apple.navigationdemo.Utils.Constants;
+import com.example.apple.gratpie.Database.PieChartData;
+import com.example.apple.gratpie.Database.PieChartDatabase;
+import com.example.apple.gratpie.Utils.Constants;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

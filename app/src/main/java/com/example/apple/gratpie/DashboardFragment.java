@@ -1,8 +1,7 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,11 +15,10 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.apple.navigationdemo.Database.PieChartData;
-import com.example.apple.navigationdemo.Database.PieChartDatabase;
-import com.example.apple.navigationdemo.Utils.Constants;
+import com.example.apple.gratpie.Database.PieChartData;
+import com.example.apple.gratpie.Database.PieChartDatabase;
+import com.example.apple.gratpie.Utils.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

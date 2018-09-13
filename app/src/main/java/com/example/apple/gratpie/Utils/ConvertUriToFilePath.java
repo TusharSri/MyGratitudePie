@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo.Utils;
+package com.example.apple.gratpie.Utils;
 
 import android.content.ContentUris;
 import android.content.Context;

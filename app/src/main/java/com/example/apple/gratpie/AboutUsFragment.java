@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

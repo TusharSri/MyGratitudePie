@@ -1,10 +1,9 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 public class PrivacyPolicyActivity extends AppCompatActivity {
 

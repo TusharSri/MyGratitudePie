@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo.Utils;
+package com.example.apple.gratpie.Utils;
 
 /**
  * We are defining all the constants which are used inside app in this class

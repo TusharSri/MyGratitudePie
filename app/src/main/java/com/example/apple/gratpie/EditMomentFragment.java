@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 
 import android.Manifest;
@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,19 +26,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.apple.navigationdemo.Database.PieChartData;
-import com.example.apple.navigationdemo.Database.PieChartDatabase;
-import com.example.apple.navigationdemo.Utils.Constants;
-import com.example.apple.navigationdemo.Utils.ConvertUriToFilePath;
+import com.example.apple.gratpie.Database.PieChartData;
+import com.example.apple.gratpie.Database.PieChartDatabase;
+import com.example.apple.gratpie.Utils.Constants;
 
 import java.util.Calendar;
 import java.util.Objects;
 
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import static android.app.Activity.RESULT_OK;

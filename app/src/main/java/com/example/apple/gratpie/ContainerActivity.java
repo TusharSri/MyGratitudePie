@@ -1,4 +1,4 @@
-package com.example.apple.navigationdemo;
+package com.example.apple.gratpie;
 
 import android.Manifest;
 import android.content.Intent;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.apple.navigationdemo.Utils.Constants;
+import com.example.apple.gratpie.Utils.Constants;
 
 import java.io.File;
 import java.io.FileOutputStream;
