@@ -151,6 +151,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                 String date = df.format(dateObj);
                 calendar.set(year, month, day);
                 int dayNumber = calendar.get(Calendar.DAY_OF_WEEK);
+                month = month+1;
                 bundle = new Bundle();
                 bundle.putString(getString(R.string.date), Constants.EMPTY_STRING + year + month + day);
                 bundle.putLong(getString(R.string.getTimeInMili), calendar.getTimeInMillis());
@@ -158,7 +159,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                 bundle.putString(getString(R.string.day), Constants.dayInWeek[dayNumber - 1]);
                 Navigation.findNavController(calendarView).navigate(R.id.pieFragment, bundle);
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
-                month = month+1;
+
                 if(month >0 && month  <10){
                     editor.putString("currentDate", Constants.EMPTY_STRING + year + "0" +month + day);
                 } else {

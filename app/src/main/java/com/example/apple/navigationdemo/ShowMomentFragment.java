@@ -67,6 +67,7 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
     }
 
     private void initViews() {
+        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
         showDate = getActivity().findViewById(R.id.date_show_textview);
         showDay = getActivity().findViewById(R.id.day_show_textview);
         showDescription = getActivity().findViewById(R.id.description_textview);

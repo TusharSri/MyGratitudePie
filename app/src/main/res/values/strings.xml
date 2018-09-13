@@ -26,7 +26,7 @@
     <string name="empty">empty</string>
     <string name="day">day</string>
     <string name="url">url</string>
-    <string name="shared_content_body">This is the best daily journel app.</string>
+    <string name="shared_content_body">This is the best daily Journal app.</string>
     <string name="shared_content_subject">Shared by My Gratitude Pie</string>
     <string name="share_via">Share via</string>
     <string name="email">Email</string>
@@ -60,4 +60,5 @@
     <string name="show_image">shownImage</string>
     <string name="calender">Calender</string>
     <string name="no_enter_on_this_day">No Enter on this day</string>
+    <string name="privacy_policy">Privacy policy</string>
 </resources>

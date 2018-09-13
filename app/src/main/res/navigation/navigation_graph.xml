@@ -92,4 +92,11 @@
             android:name="shownImage"
             app:type="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.example.apple.navigationdemo.AboutUsFragment"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" >
+    </fragment>
 </navigation>

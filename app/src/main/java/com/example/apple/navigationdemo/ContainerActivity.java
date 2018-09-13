@@ -8,10 +8,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +38,7 @@ public class ContainerActivity extends AppCompatActivity
 
     private ImageView drawerIcon;
     private ImageView sharingImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,9 +91,13 @@ public class ContainerActivity extends AppCompatActivity
             intent.putExtra(Intent.EXTRA_TEXT, Constants.EMPTY_STRING);
             startActivity(intent);
         } else if (id == R.id.nav_about) {
-
-        } else if (id == R.id.nav_help) {
-
+            // Create new fragment and transaction
+            FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.my_nav_host_fragment, new AboutUsFragment());
+            transaction.commit();
+        } else if (id == R.id.nav_privacy_policy) {
+            startActivity(new Intent(getApplicationContext(),PrivacyPolicyActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -153,6 +157,9 @@ public class ContainerActivity extends AppCompatActivity
             takeScreenshotAndShare();
             drawerIcon.setVisibility(View.VISIBLE);
             sharingImage.setVisibility(View.VISIBLE);
+            if(findViewById(R.id.button_edit_show_moment) != null) {
+                findViewById(R.id.button_edit_show_moment).setVisibility(View.VISIBLE);
+            }
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 Snackbar.make(view, R.string.need_pemission_to_show_pic, Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
@@ -173,6 +180,9 @@ public class ContainerActivity extends AppCompatActivity
     private void takeScreenshotAndShare() {
         drawerIcon.setVisibility(View.GONE);
         sharingImage.setVisibility(View.GONE);
+        if(findViewById(R.id.button_edit_show_moment) != null){
+            findViewById(R.id.button_edit_show_moment).setVisibility(View.GONE);
+        }
         String Slash = "/";
         String jpgExtension = ".jpg";
         String gratitudePie = "GratitudePie";

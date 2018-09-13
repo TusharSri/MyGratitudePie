@@ -103,6 +103,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     }
 
     private void initViews() {
+        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         momentTextView = getActivity().findViewById(R.id.edit_text_moment);
         momentTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         fileAddedPreviewImageview = getActivity().findViewById(R.id.imageview_file_added_preview);
