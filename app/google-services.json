@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "931743178462",
-    "firebase_url": "https://navigation-758ae.firebaseio.com",
-    "project_id": "navigation-758ae",
-    "storage_bucket": "navigation-758ae.appspot.com"
+    "project_number": "429103805456",
+    "firebase_url": "https://my-gratitude.firebaseio.com",
+    "project_id": "my-gratitude",
+    "storage_bucket": "my-gratitude.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:931743178462:android:766be50ed7587523",
+        "mobilesdk_app_id": "1:429103805456:android:395a5d9a96188127",
         "android_client_info": {
           "package_name": "com.example.apple.gratpie"
         }
       },
       "oauth_client": [
         {
-          "client_id": "931743178462-dabtpr0m890ncm6peeq08k9uqo3beqjl.apps.googleusercontent.com",
+          "client_id": "429103805456-be1kfsrqv2lgp3kp4gap84nslhtd0iqh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.apple.gratpie",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "931743178462-7ljhl197no740vv63klpjl2tc8baab0k.apps.googleusercontent.com",
+          "client_id": "429103805456-ah0lqqu9fnpq1ujq7cntviplmnpcnc25.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDLeXzRr1m4gFm-SgtlWrItlcnOerbNYf4"
+          "current_key": "AIzaSyCPqua9wtxDwp9mg4g24ZoKCfEdEDOpCyE"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "931743178462-7ljhl197no740vv63klpjl2tc8baab0k.apps.googleusercontent.com",
+              "client_id": "429103805456-ah0lqqu9fnpq1ujq7cntviplmnpcnc25.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

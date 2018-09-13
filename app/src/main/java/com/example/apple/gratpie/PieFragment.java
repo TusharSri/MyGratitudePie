@@ -125,7 +125,11 @@ public class PieFragment extends Fragment implements View.OnClickListener {
                     counter = pieChartData[i].getCounter();
                     if (counter > 0) {
                         mMomentDescription.add(pieChartData[i].getMomentDesc());
-                        mAttachUrl.add(pieChartData[i].getAttachedUrl());
+                        if(null == pieChartData[i] || null == pieChartData[i].getAttachedUrl()){
+                            mAttachUrl.add("null");
+                        } else {
+                            mAttachUrl.add(pieChartData[i].getAttachedUrl());
+                        }
                         setValues(mMomentDescription, mAttachUrl);
                     }
                     if (counter >= 5) {
@@ -154,28 +158,28 @@ public class PieFragment extends Fragment implements View.OnClickListener {
         }
         if (val.size() >= 2) {
             moment2.setText(val.get(1));
-            if (url.size() >= 2 && url.get(1)!= null && !url.get(0).contains("null")) {
+            if (url.size() >= 2 && url.get(1)!= null && !url.get(1).contains("null")) {
                 momentFile2.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment2).setOnClickListener(this);
         }
         if (val.size() >= 3) {
             moment3.setText(val.get(2));
-            if (url.size() >= 3 && url.get(2)!= null && !url.get(0).contains("null")) {
+            if (url.size() >= 3 && url.get(2)!= null && !url.get(2).contains("null")) {
                 momentFile3.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment3).setOnClickListener(this);
         }
         if (val.size() >= 4) {
             moment4.setText(val.get(3));
-            if (url.size() >= 4 && url.get(3)!= null && !url.get(0).contains("null")) {
+            if (url.size() >= 4 && url.get(3)!= null && !url.get(3).contains("null")) {
                 momentFile4.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment4).setOnClickListener(this);
         }
         if (val.size() >= 5) {
             moment5.setText(val.get(4));
-            if (url.size() >= 5 && url.get(4)!= null && !url.get(0).contains("null")) {
+            if (url.size() >= 5 && url.get(4)!= null && !url.get(4).contains("null")) {
                 momentFile5.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment5).setOnClickListener(this);

@@ -19,7 +19,7 @@ android {
     }
 
     hockeyapp {
-        apiToken = "464e1bb4926645da8279acb3d198ac7d"
+        apiToken = "b0e14004c8bb4fd9ab6739e9283ae019"
     }
 }
 

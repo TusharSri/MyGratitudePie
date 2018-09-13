@@ -1,6 +1,7 @@
 package com.example.apple.gratpie;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -38,6 +39,11 @@ public class ContainerActivity extends AppCompatActivity
 
     private ImageView drawerIcon;
     private ImageView sharingImage;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,7 @@ public class ContainerActivity extends AppCompatActivity
         sharingImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                verifyStoragePermissions(ContainerActivity.this);
                 sharingButtonClicked(view);
             }
         });
@@ -153,33 +160,23 @@ public class ContainerActivity extends AppCompatActivity
     }
 
     public void sharingButtonClicked(View view) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            takeScreenshotAndShare();
-            drawerIcon.setVisibility(View.VISIBLE);
-            sharingImage.setVisibility(View.VISIBLE);
-            if(findViewById(R.id.button_edit_show_moment) != null) {
-                findViewById(R.id.button_edit_show_moment).setVisibility(View.VISIBLE);
-            }
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Snackbar.make(view, R.string.need_pemission_to_show_pic, Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ActivityCompat.requestPermissions(ContainerActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.WRITE_EXTERNAL_STORAGE_CODE);
-                            }
-                        }).show();
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.WRITE_EXTERNAL_STORAGE_CODE);
-            }
+        takeScreenshotAndShare();
+        drawerIcon.setVisibility(View.VISIBLE);
+        sharingImage.setVisibility(View.VISIBLE);
+        if(findViewById(R.id.button_edit_show_moment) != null) {
+            findViewById(R.id.button_edit_show_moment).setVisibility(View.VISIBLE);
         }
     }
     /**
      * Here er are creating bitmap of current activity and storing it into phone and shaing it via any app which support image
      */
     private void takeScreenshotAndShare() {
-        drawerIcon.setVisibility(View.GONE);
-        sharingImage.setVisibility(View.GONE);
+        if(null != drawerIcon){
+            drawerIcon.setVisibility(View.GONE);
+        }
+        if(sharingImage != null) {
+            sharingImage.setVisibility(View.GONE);
+        }
         if(findViewById(R.id.button_edit_show_moment) != null){
             findViewById(R.id.button_edit_show_moment).setVisibility(View.GONE);
         }
@@ -226,5 +223,19 @@ public class ContainerActivity extends AppCompatActivity
         sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shared_content_body));
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+    }
+
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 }

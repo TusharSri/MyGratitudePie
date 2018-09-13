@@ -65,7 +65,8 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {
             Manifest.permission.WRITE_CALENDAR,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private long getTimeInMili;
 
