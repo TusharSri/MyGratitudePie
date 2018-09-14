@@ -1,6 +1,7 @@
 package com.example.apple.gratpie;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.apple.gratpie.Database.PieChartDatabase;
 import com.example.apple.gratpie.Utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import androidx.navigation.Navigation;
 
@@ -30,27 +32,23 @@ import androidx.navigation.Navigation;
  */
 public class PieFragment extends Fragment implements View.OnClickListener {
 
-    Button attachMomentButton;
-    TextView dayOfMonthTextView;
-    TextView formattedDateTextView;
-    Bundle bundle;
-    TextView moment1;
-    TextView moment2;
-    TextView moment3;
-    TextView moment4;
-    TextView moment5;
-    ImageView momentFile1;
-    ImageView momentFile2;
-    ImageView momentFile3;
-    ImageView momentFile4;
-    ImageView momentFile5;
+    private Button attachMomentButton;
+    private TextView moment1;
+    private TextView moment2;
+    private TextView moment3;
+    private TextView moment4;
+    private TextView moment5;
+    private ImageView momentFile1;
+    private ImageView momentFile2;
+    private ImageView momentFile3;
+    private ImageView momentFile4;
+    private ImageView momentFile5;
     private String formattedDate;
     private String day;
     private int counter = 0;
-    protected ArrayList<String> mAttachUrl = new ArrayList<>();
-    protected ArrayList<String> mMomentDescription = new ArrayList<>();
+    private ArrayList<String> mAttachUrl = new ArrayList<>();
+    private ArrayList<String> mMomentDescription = new ArrayList<>();
     private String date;
-    private int selectDateRequestCode = 191;
     private PieChartData[] pieChartData;
     private boolean isNotEdited = true;
     private long getTimeInMili;
@@ -60,7 +58,7 @@ public class PieFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pie, container, false);
@@ -83,14 +81,14 @@ public class PieFragment extends Fragment implements View.OnClickListener {
 
     //Initializing Views here
     private void initViews() {
-        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
         RelativeLayout pieLayout = getActivity().findViewById(R.id.relative_pie);
         Animation aniSlide = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
         pieLayout.startAnimation(aniSlide);
         attachMomentButton = getActivity().findViewById(R.id.attach_moment_button);
         attachMomentButton.setOnClickListener(this);
-        dayOfMonthTextView = getActivity().findViewById(R.id.day_textview);
-        formattedDateTextView = getActivity().findViewById(R.id.date_textview);
+        TextView dayOfMonthTextView = getActivity().findViewById(R.id.day_textview);
+        TextView formattedDateTextView = getActivity().findViewById(R.id.date_textview);
         moment1 = getActivity().findViewById(R.id.moment1);
         moment2 = getActivity().findViewById(R.id.moment2);
         moment3 = getActivity().findViewById(R.id.moment3);
@@ -103,16 +101,23 @@ public class PieFragment extends Fragment implements View.OnClickListener {
         momentFile4 = getActivity().findViewById(R.id.moment_file4);
         momentFile5 = getActivity().findViewById(R.id.moment_file5);
 
-        day = getArguments().getString(getString(R.string.day));
-        date = getArguments().getString(getString(R.string.date));
-        getTimeInMili = getArguments().getLong(getString(R.string.getTimeInMili));
+        if (getArguments() != null) {
+            day = getArguments().getString(getString(R.string.day));
+        }
+        if (getArguments() != null) {
+            date = getArguments().getString(getString(R.string.date));
+        }
+        if (getArguments() != null) {
+            getTimeInMili = getArguments().getLong(getString(R.string.getTimeInMili));
+        }
         dayOfMonthTextView.setText(day);
         formattedDate = getArguments().getString(getString(R.string.formatted_date));
         formattedDateTextView.setText(formattedDate);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void fetchDataFromDB() {
-        AsyncTask asyncTask = new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, Void>() {
 
             @Override
             protected void onPostExecute(Void aVoid) {
@@ -121,21 +126,21 @@ public class PieFragment extends Fragment implements View.OnClickListener {
                 }
                 mMomentDescription.clear();
                 mAttachUrl.clear();
-                for (int i = 0; i < pieChartData.length; i++) {
-                    counter = pieChartData[i].getCounter();
+                for (PieChartData aPieChartData : pieChartData) {
+                    counter = aPieChartData.getCounter();
                     if (counter > 0) {
-                        mMomentDescription.add(pieChartData[i].getMomentDesc());
-                        if(null == pieChartData[i] || null == pieChartData[i].getAttachedUrl()){
+                        mMomentDescription.add(aPieChartData.getMomentDesc());
+                        if (null == aPieChartData.getAttachedUrl()) {
                             mAttachUrl.add("null");
                         } else {
-                            mAttachUrl.add(pieChartData[i].getAttachedUrl());
+                            mAttachUrl.add(aPieChartData.getAttachedUrl());
                         }
-                        setValues(mMomentDescription, mAttachUrl);
                     }
                     if (counter >= 5) {
                         attachMomentButton.setVisibility(View.GONE);
                     }
                 }
+                setValues(mMomentDescription, mAttachUrl);
             }
 
             @Override
@@ -151,35 +156,35 @@ public class PieFragment extends Fragment implements View.OnClickListener {
     public void setValues(ArrayList<String> val, ArrayList<String> url) {
         if (val.size() >= 1) {
             moment1.setText(val.get(0));
-            if (url.size() >= 1 && url.get(0)!= null && !url.get(0).contains("null")) {
+            if (url.size() >= 1 && url.get(0) != null && !url.get(0).contains("null")) {
                 momentFile1.setVisibility(View.VISIBLE);
             }
-            getActivity().findViewById(R.id.relative_moment1).setOnClickListener(this);
+            Objects.requireNonNull(getActivity()).findViewById(R.id.relative_moment1).setOnClickListener(this);
         }
         if (val.size() >= 2) {
             moment2.setText(val.get(1));
-            if (url.size() >= 2 && url.get(1)!= null && !url.get(1).contains("null")) {
+            if (url.size() >= 2 && url.get(1) != null && !url.get(1).contains("null")) {
                 momentFile2.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment2).setOnClickListener(this);
         }
         if (val.size() >= 3) {
             moment3.setText(val.get(2));
-            if (url.size() >= 3 && url.get(2)!= null && !url.get(2).contains("null")) {
+            if (url.size() >= 3 && url.get(2) != null && !url.get(2).contains("null")) {
                 momentFile3.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment3).setOnClickListener(this);
         }
         if (val.size() >= 4) {
             moment4.setText(val.get(3));
-            if (url.size() >= 4 && url.get(3)!= null && !url.get(3).contains("null")) {
+            if (url.size() >= 4 && url.get(3) != null && !url.get(3).contains("null")) {
                 momentFile4.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment4).setOnClickListener(this);
         }
         if (val.size() >= 5) {
             moment5.setText(val.get(4));
-            if (url.size() >= 5 && url.get(4)!= null && !url.get(4).contains("null")) {
+            if (url.size() >= 5 && url.get(4) != null && !url.get(4).contains("null")) {
                 momentFile5.setVisibility(View.VISIBLE);
             }
             getActivity().findViewById(R.id.relative_moment5).setOnClickListener(this);

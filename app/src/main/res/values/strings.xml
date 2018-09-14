@@ -62,4 +62,5 @@
     <string name="no_enter_on_this_day">No Enter on this day</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="hockey_api_key">47fa8f47cd334b7e84494567fce7802f</string>
+    <string name="connection_failed">Connection failed</string>
 </resources>
