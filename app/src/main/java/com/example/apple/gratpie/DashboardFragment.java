@@ -38,7 +38,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
 
     private CalendarView calendarView;
     private TextView thingsIAmGreatfulForTextView;
-    private Button gotoDate;
     private int counter;
     private String currentDate;
     private String currentDateWithoutZero;
@@ -50,7 +49,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -122,7 +121,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
         getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         calendarView = getActivity().findViewById(R.id.calendar);
         thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
-        gotoDate = getActivity().findViewById(R.id.button_goto_date);
+        Button gotoDate = getActivity().findViewById(R.id.button_goto_date);
         gotoDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

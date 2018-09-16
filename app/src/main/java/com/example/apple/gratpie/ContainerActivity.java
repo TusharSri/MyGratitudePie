@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class ContainerActivity extends AppCompatActivity
@@ -51,7 +52,7 @@ public class ContainerActivity extends AppCompatActivity
         setContentView(R.layout.activity_container);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         SharedPreferences.Editor editor = getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
         editor.putString("currentDate", new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()));
@@ -85,7 +86,7 @@ public class ContainerActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

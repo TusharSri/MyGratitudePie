@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.apple.gratpie.Utils.Constants;
 
+import java.util.Objects;
+
 import androidx.navigation.Navigation;
 
 
@@ -23,11 +25,7 @@ import androidx.navigation.Navigation;
  */
 public class ShowMomentFragment extends Fragment implements View.OnClickListener {
 
-    TextView showDate;
-    TextView showDay;
-    TextView showDescription;
-    ImageView showImageAdded;
-    Button editMomentButton;
+    private Button editMomentButton;
     private String day;
     private String date;
     private String formattedDate;
@@ -42,9 +40,8 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_show_moment, container, false);
     }
 
@@ -59,22 +56,39 @@ public class ShowMomentFragment extends Fragment implements View.OnClickListener
         initViews();
     }
 
+    /**
+     * To initialize the views
+     */
     private void initViews() {
-        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
-        showDate = getActivity().findViewById(R.id.date_show_textview);
-        showDay = getActivity().findViewById(R.id.day_show_textview);
-        showDescription = getActivity().findViewById(R.id.description_textview);
-        showImageAdded = getActivity().findViewById(R.id.imageview_file_show_added_preview);
+        Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
+        TextView showDate = getActivity().findViewById(R.id.date_show_textview);
+        TextView showDay = getActivity().findViewById(R.id.day_show_textview);
+        TextView showDescription = getActivity().findViewById(R.id.description_textview);
+        ImageView showImageAdded = getActivity().findViewById(R.id.imageview_file_show_added_preview);
         editMomentButton = getActivity().findViewById(R.id.button_edit_show_moment);
         editMomentButton.setOnClickListener(this);
 
-        day = getArguments().getString(getString(R.string.day));
-        date = getArguments().getString(getString(R.string.date));
-        formattedDate = getArguments().getString(getString(R.string.formatted_date));
-        attachFile = getArguments().getString(Constants.MOMENT_ATTACH_FILE);
-        attachDesc = getArguments().getString(Constants.MOMENT_DESCRIPTION);
-        counter = getArguments().getInt(getString(R.string.counter));
-        timeInMiliSecond = getArguments().getLong(getString(R.string.getTimeInMili));
+        if (getArguments() != null) {
+            day = getArguments().getString(getString(R.string.day));
+        }
+        if (getArguments() != null) {
+            date = getArguments().getString(getString(R.string.date));
+        }
+        if (getArguments() != null) {
+            formattedDate = getArguments().getString(getString(R.string.formatted_date));
+        }
+        if (getArguments() != null) {
+            attachFile = getArguments().getString(Constants.MOMENT_ATTACH_FILE);
+        }
+        if (getArguments() != null) {
+            attachDesc = getArguments().getString(Constants.MOMENT_DESCRIPTION);
+        }
+        if (getArguments() != null) {
+            counter = getArguments().getInt(getString(R.string.counter));
+        }
+        if (getArguments() != null) {
+            timeInMiliSecond = getArguments().getLong(getString(R.string.getTimeInMili));
+        }
 
         showDate.setText(formattedDate);
         showDay.setText(day);

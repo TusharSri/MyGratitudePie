@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ import net.hockeyapp.android.UpdateManager;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 7;
+    private static final String TAG = "LoginActivity";
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mAuth;
@@ -77,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 .enableAutoManage(LoginActivity.this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+                        Snackbar.make(icon, R.string.connection_failed, Snackbar.LENGTH_LONG).show();
                     }
                 } /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
@@ -108,11 +110,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 if (account != null) {
                     firebaseAuthWithGoogle(account);
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
                 mProgressDialog.show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG,e.getMessage());
         }
     }
 
@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG,e.getMessage());
         }
     }
 

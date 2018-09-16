@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Objects;
+
 public class ShowImageFragment extends Fragment {
 
     public ShowImageFragment() {
@@ -18,7 +20,7 @@ public class ShowImageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_show_image, container, false);
@@ -37,8 +39,11 @@ public class ShowImageFragment extends Fragment {
     }
 
     private void initViews() {
-        String attachFile = getArguments().getString(getString(R.string.show_image));
-        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
+        String attachFile = null;
+        if (getArguments() != null) {
+            attachFile = getArguments().getString(getString(R.string.show_image));
+        }
+        Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         ImageView previewImageView = getActivity().findViewById(R.id.image_preview);
         Glide.with(getContext())
                 .load(attachFile)
@@ -48,6 +53,6 @@ public class ShowImageFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
     }
 }
