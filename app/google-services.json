@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "429103805456-nsqd0k787dbmma4matp3lumook7qul3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apple.gratpie",
+            "certificate_hash": "bc7da8c6e34b51a883fe7b3c1d4814c6b72152f9"
+          }
+        },
+        {
           "client_id": "429103805456-ah0lqqu9fnpq1ujq7cntviplmnpcnc25.apps.googleusercontent.com",
           "client_type": 3
         }

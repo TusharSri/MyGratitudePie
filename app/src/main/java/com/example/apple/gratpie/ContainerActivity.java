@@ -171,7 +171,7 @@ public class ContainerActivity extends AppCompatActivity
     /**
      * Here er are creating bitmap of current activity and storing it into phone and shaing it via any app which support image
      */
-    private void takeScreenshotAndShare() {
+   /* private void takeScreenshotAndShare() {
         if(null != drawerIcon){
             drawerIcon.setVisibility(View.GONE);
         }
@@ -205,6 +205,7 @@ public class ContainerActivity extends AppCompatActivity
         v1.setDrawingCacheEnabled(false);
 
         File imageFile = new File(mPath);
+        imageFile.mkdir();
         FileOutputStream outputStream;
         try {
             outputStream = new FileOutputStream(imageFile);
@@ -224,6 +225,52 @@ public class ContainerActivity extends AppCompatActivity
         sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shared_content_body));
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+    }*/
+
+
+    private void takeScreenshotAndShare() {
+        if(null != drawerIcon){
+            drawerIcon.setVisibility(View.GONE);
+        }
+        if(sharingImage != null) {
+            sharingImage.setVisibility(View.GONE);
+        }
+        if(findViewById(R.id.button_edit_show_moment) != null){
+            findViewById(R.id.button_edit_show_moment).setVisibility(View.GONE);
+        }
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            Uri uri = Uri.fromFile(imageFile);
+            Intent sharingIntent = new Intent();
+            sharingIntent.setAction(Intent.ACTION_SEND);
+            sharingIntent.setType("image/*");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shared_content_subject));
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shared_content_body));
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+        }
     }
 
     public static void verifyStoragePermissions(Activity activity) {

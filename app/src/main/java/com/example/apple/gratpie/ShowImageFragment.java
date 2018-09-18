@@ -44,6 +44,7 @@ public class ShowImageFragment extends Fragment {
             attachFile = getArguments().getString(getString(R.string.show_image));
         }
         Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
+        Objects.requireNonNull(getActivity()).findViewById(R.id.drawer_icon_imageview).setVisibility(View.GONE);
         ImageView previewImageView = getActivity().findViewById(R.id.image_preview);
         Glide.with(getContext())
                 .load(attachFile)
@@ -54,5 +55,6 @@ public class ShowImageFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).findViewById(R.id.drawer_icon_imageview).setVisibility(View.VISIBLE);
     }
 }

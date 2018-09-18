@@ -2,9 +2,16 @@ package com.example.apple.gratpie;
 
 
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -190,5 +197,51 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
                 calendarView.setDate(calendar.getTimeInMillis());
             }
         };
+
     }
+
+    public  void syncCalendar(Context context, String calendarId) {
+        ContentResolver cr = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+        values.put(CalendarContract.Calendars.VISIBLE, 1);
+
+        cr.update(
+                ContentUris.withAppendedId(getCalendarUriBase(),
+                        Long.parseLong(calendarId)), values, null, null);
+    }
+
+
+    private String getCalendarUriBase() {
+        String calendarUriBase = null;
+        Uri calendars = Uri.parse("content://calendar/calendars");
+        Cursor managedCursor = null;
+        try {
+            managedCursor = getActivity().managedQuery(calendars, null, null, null, null);
+        } catch (Exception e) {
+            // eat
+        }
+
+        if (managedCursor != null) {
+            calendarUriBase = "content://calendar/";
+        } else {
+            calendars = Uri.parse("content://com.android.calendar/calendars");
+            try {
+                managedCursor = managedQuery(calendars, null, null, null, null);
+            } catch (Exception e) {
+                // statement to print the stacktrace
+            }
+
+            if (managedCursor != null) {
+                calendarUriBase = "content://com.android.calendar/";
+            }
+
+        }
+
+        return managedCursor.g;
+    }
+
+
 }
+
+
