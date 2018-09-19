@@ -195,14 +195,14 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                     cv.put(CalendarContract.Events.CALENDAR_ID, 1);
                     Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
 
-                    Intent intent = new Intent(Intent.ACTION_INSERT)
+/*                    Intent intent = new Intent(Intent.ACTION_INSERT)
                             .setData(CalendarContract.Events.CONTENT_URI)
                             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getTimeInMili)
                             .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getTimeInMili + 60 * 60 * 1000)
                             .putExtra(CalendarContract.Events.TITLE, "Gratitude Pie")
                             .putExtra(CalendarContract.Events.DESCRIPTION, momentAdded)
                             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
-                    startActivity(intent);
+                    startActivity(intent);*/
 
                     Snackbar.make(addFileButton, "Successfully Added", Snackbar.LENGTH_SHORT).show();
                     Navigation.findNavController(addFileButton).popBackStack();

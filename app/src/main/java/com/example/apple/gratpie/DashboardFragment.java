@@ -199,49 +199,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
         };
 
     }
-
-    public  void syncCalendar(Context context, String calendarId) {
-        ContentResolver cr = context.getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
-        values.put(CalendarContract.Calendars.VISIBLE, 1);
-
-        cr.update(
-                ContentUris.withAppendedId(getCalendarUriBase(),
-                        Long.parseLong(calendarId)), values, null, null);
-    }
-
-
-    private String getCalendarUriBase() {
-        String calendarUriBase = null;
-        Uri calendars = Uri.parse("content://calendar/calendars");
-        Cursor managedCursor = null;
-        try {
-            managedCursor = getActivity().managedQuery(calendars, null, null, null, null);
-        } catch (Exception e) {
-            // eat
-        }
-
-        if (managedCursor != null) {
-            calendarUriBase = "content://calendar/";
-        } else {
-            calendars = Uri.parse("content://com.android.calendar/calendars");
-            try {
-                managedCursor = managedQuery(calendars, null, null, null, null);
-            } catch (Exception e) {
-                // statement to print the stacktrace
-            }
-
-            if (managedCursor != null) {
-                calendarUriBase = "content://com.android.calendar/";
-            }
-
-        }
-
-        return managedCursor.g;
-    }
-
-
 }
 
 

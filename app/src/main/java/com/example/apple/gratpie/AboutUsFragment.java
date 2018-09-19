@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,58 +37,66 @@ public class AboutUsFragment extends Fragment {
 
         TextView aboutUsTextView = getActivity().findViewById(R.id.about_us_textview);
         aboutUsTextView.setText(Html.fromHtml("<h1><strong>Why Gratitude?</strong></h1>\n" +
-                "<p><span style=\"font-weight: 400;\">Gratitude is a positive emotion that promises Happiness and good Health.</span></p>\n" +
+                "<p>Gratitude is a positive emotion that promises Happiness and good Health.</p>\n" +
                 "<h3><strong>The Personal Benefits of practicing Gratitude</strong></h3>\n" +
-                "<p><span style=\"font-weight: 400;\">Many Scientific researchers already proved that practicing Gratitude -</span></p>\n" +
+                "<p>Many Scientific researchers already proved that practicing Gratitude -</p>\n" +
                 "<ul>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Improves Well-being</span></li>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Improves Relationships</span></li>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Strengthen Immune system</span></li>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Improves Sleep quality</span></li>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Reduces stress and relaxes the mind</span></li>\n" +
+                "<li>Improves Well-being</li>\n" +
+                "<li>Improves Relationships</li>\n" +
+                "<li>Strengthen Immune system</li>\n" +
+                "<li>Improves Sleep quality</li>\n" +
+                "<li>Reduces stress and relaxes the mind</li>\n" +
                 "</ul>\n" +
-                "<p>&nbsp;</p>\n" +
+                "<p><em>&nbsp;</em></p>\n" +
                 "<p><strong>Life will never be perfect for any of us but Gratitude encourages us to identify goodness in our Life.</strong></p>\n" +
-                "<p><br /><br /><br /></p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p>&nbsp;</p>\n" +
                 "<h1><strong>What is \"Gratitude Pie\"?</strong></h1>\n" +
-                "<p><span style=\"font-weight: 400;\">A Pie-style Gratitude Journal App which make memories easy and quick to save. It is very Interactive and share-friendly too.</span></p>\n" +
+                "<p>A Pie-style Gratitude Journal App which make memories easy and quick to save. It is very Interactive and share-friendly too.</p>\n" +
                 "<p>&nbsp;</p>\n" +
                 "<ol>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Add your grateful moments along with a picture on-the-go.</span></li>\n" +
+                "<li>Add your grateful moments along with a picture on-the-go.</li>\n" +
                 "</ol>\n" +
-                "<p><span style=\"font-weight: 400;\">(Go to date and tap on I am grateful for button</span><span style=\"font-weight: 400;\">)</span></p>\n" +
+                "<p>(Go to date and tap on I am grateful for button)</p>\n" +
                 "<ol>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Edit them whenever you want.</span></li>\n" +
+                "<li>Edit them whenever you want.</li>\n" +
                 "</ol>\n" +
-                "<p><span style=\"font-weight: 400;\">(Tap on the Pie to edit your grateful moments)</span></p>\n" +
+                "<p>(Tap on the Pie to edit your grateful moments)</p>\n" +
                 "<ol>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">See them whenever you feel sad and gloomy.</span></li>\n" +
+                "<li>See them whenever you feel sad and gloomy.</li>\n" +
                 "</ol>\n" +
-                "<p><span style=\"font-weight: 400;\">(Go to date and view your Pie for the day)</span></p>\n" +
+                "<p>(Go to date and view your Pie for the day)</p>\n" +
                 "<ol>\n" +
-                "<li style=\"font-weight: 400;\"><span style=\"font-weight: 400;\">Share them with others to express the gratitude.</span></li>\n" +
+                "<li>Share them with others to express the gratitude.</li>\n" +
                 "</ol>\n" +
-                "<p><span style=\"font-weight: 400;\">(Share your Gratitude Pie or your grateful moment)</span></p>\n" +
-                "<p><br /><br /></p>\n" +
+                "<p>(Share your Gratitude Pie or your grateful moment)</p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p>&nbsp;</p>\n" +
                 "<p><strong>It is recommended that each night before going to bed, you should note down the things you were grateful for in a day.</strong></p>\n" +
                 "<p>&nbsp;</p>\n" +
-                "<p><span style=\"font-weight: 400;\">With this App, </span><span style=\"font-weight: 400;\">you can add 5 grateful moments each day and view them as a colorful Pie. </span><span style=\"font-weight: 400;\">Your Gratitude </span><span style=\"font-weight: 400;\">Pies can be </span><span style=\"font-weight: 400;\">synchronized on Google drive and viewed on any Android device.</span></p>\n" +
-                "<p><br /><br /></p>\n" +
+                "<p>With this App, you can add 5 grateful moments each day and view them as a colorful Pie. Your Gratitude Pies can be synchronized on Google drive and viewed on any Android device.</p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p>&nbsp;</p>\n" +
                 "<p><strong>Contact Us</strong></p>\n" +
-                "<p><span style=\"font-weight: 400;\">To report Bugs, suggest new features or to say hi.</span></p>\n" +
-                "<p><span style=\"font-weight: 400;\">Email- </span><a href=\"mailto:mygratitudepie@gmail.com\"><span style=\"font-weight: 400;\">mygratitudepie@gmail.com</span></a></p>\n" +
-                "<p><br /><br /></p>\n" +
+                "<p>To report Bugs, suggest new features or to say hi.</p>\n" +
+                "<p>Email- <u><a href=\"mailto:mygratitudepie@gmail.com\">mygratitudepie@gmail.com</a></u></p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p>&nbsp;</p>\n" +
                 "<p><strong>Connect with Us!</strong></p>\n" +
-                "<p><a href=\"https://m.facebook.com/groups/Gratitudepie\"><span style=\"font-weight: 400;\">Join our Facebook Group to share your Gratitude Pie</span></a><span style=\"font-weight: 400;\">.</span></p>\n" +
-                "<p><a href=\"https://twitter.com/gratitudepie\"><span style=\"font-weight: 400;\">Twitter</span></a></p>\n" +
+                "<p><u><a href=\"https://m.facebook.com/groups/Gratitudepie\">Join our Facebook Group to share your Gratitude Pie</a></u>.</p>\n" +
+                "<p><u><a href=\"https://twitter.com/gratitudepie\">Twitter</a></u></p>\n" +
                 "<p>&nbsp;</p>\n" +
                 "<p><strong>Rate Us</strong></p>\n" +
-                "<p><span style=\"font-weight: 400;\">If you enjoy using Gratitude Pie, kindly rate us in the store.</span></p>\n" +
+                "<p>If you enjoy using Gratitude Pie, kindly rate us in the store.</p>\n" +
                 "<p>&nbsp;</p>\n" +
-                "<p><span style=\"font-weight: 400;\">Rate us Now (google play store link)</span></p>\n" +
-                "<p><br /><br /></p>\n" +
-                "<p><strong>@2018 Gratitude Pie</strong></p>\n"  +
-                "<p><strong>Designed by Vipul Dhiman</strong></p>\n\n\n\n"));
+                "<p><a href=\"https://play.google.com/store/apps/details?id=com.example.apple.gratpie\">Rate us Now </a></p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p>&nbsp;</p>\n" +
+                "<p><strong>@2018 Gratitude Pie</strong></p>\n" +
+                "<p><strong>Developed by Kamal Vaid</strong></p>\n" +
+                "<p><strong>Designed by Vipul Dhiman</strong></p>"));
+        aboutUsTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
