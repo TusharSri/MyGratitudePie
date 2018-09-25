@@ -72,7 +72,6 @@
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:singleLine="true"
-                android:maxLength="100"
                 android:ems="10"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingStart="@dimen/_8sdp"
