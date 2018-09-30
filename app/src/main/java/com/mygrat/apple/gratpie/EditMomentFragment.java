@@ -4,6 +4,7 @@ package com.mygrat.apple.gratpie;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import com.mygrat.apple.gratpie.Utils.Constants;
 
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import androidx.navigation.Navigation;
 
@@ -94,7 +96,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     private void initViews() {
         Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         momentTextView = getActivity().findViewById(R.id.edit_text_moment);
-        momentTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        momentTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         fileAddedPreviewImageview = getActivity().findViewById(R.id.imageview_file_added_preview);
         addFileButton = getActivity().findViewById(R.id.button_add_file);
         Button attachMomentButton = getActivity().findViewById(R.id.button_add_moment);
@@ -172,7 +174,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
         if (momentAdded.equals("")) {
             Snackbar.make(addFileButton, R.string.please_add_your_moment_first, Snackbar.LENGTH_SHORT).show();
         } else {
-             new AsyncTask<Void, Void, Void>() {
+            new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     counter++;
@@ -193,7 +195,18 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                     cv.put(CalendarContract.Events.DTEND, getTimeInMili + 60 * 60 * 1000);
                     cv.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance().getTimeZone().getID());
                     cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
                     Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
+                    ContentUris.parseId(uri);
 
 /*                    Intent intent = new Intent(Intent.ACTION_INSERT)
                             .setData(CalendarContract.Events.CONTENT_URI)

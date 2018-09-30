@@ -17,18 +17,15 @@
         android:roundIcon="@drawable/ic_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="net.hockeyapp.android.appIdentifier"
             android:value="@string/hockey_api_key" />
 
         <activity
-            android:name="com.mygrat.apple.gratpie.ContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:name=".ContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.mygrat.apple.gratpie.LoginActivity"
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +33,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mygrat.apple.gratpie.PrivacyPolicyActivity" />
+        <activity android:name=".PrivacyPolicyActivity" />
+
+        <receiver
+            android:name=".notification.AlarmNotificationReceiver" />
+        <receiver
+            android:name=".notification.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".notification.MyService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

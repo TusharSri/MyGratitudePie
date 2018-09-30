@@ -19,4 +19,6 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd_hh:mm:ss";
     public static final String dayInWeek[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     public static final int READ_CALENDAR = 12;
+    public static final int HOUR = 21;
+    public static final int MINUTE = 01;
 }

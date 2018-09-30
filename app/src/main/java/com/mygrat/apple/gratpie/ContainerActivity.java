@@ -2,6 +2,9 @@ package com.mygrat.apple.gratpie;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +30,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mygrat.apple.gratpie.Utils.Constants;
+import com.mygrat.apple.gratpie.notification.AlarmNotificationReceiver;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,6 +87,8 @@ public class ContainerActivity extends AppCompatActivity
         });
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        startAlarm(true, true);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -91,7 +98,7 @@ public class ContainerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_calendar) {
-            startActivity(new Intent(this,ContainerActivity.class));
+            startActivity(new Intent(this, ContainerActivity.class));
             finish();
         } else if (id == R.id.nav_connect) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MAIL_TO + Constants.EMAIL_ID));
@@ -105,7 +112,7 @@ public class ContainerActivity extends AppCompatActivity
             transaction.replace(R.id.my_nav_host_fragment, new AboutUsFragment());
             transaction.commit();
         } else if (id == R.id.nav_privacy_policy) {
-            startActivity(new Intent(getApplicationContext(),PrivacyPolicyActivity.class));
+            startActivity(new Intent(getApplicationContext(), PrivacyPolicyActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,78 +171,23 @@ public class ContainerActivity extends AppCompatActivity
         takeScreenshotAndShare();
         drawerIcon.setVisibility(View.VISIBLE);
         sharingImage.setVisibility(View.VISIBLE);
-        if(findViewById(R.id.button_edit_show_moment) != null) {
+        if (findViewById(R.id.button_edit_show_moment) != null) {
             findViewById(R.id.button_edit_show_moment).setVisibility(View.VISIBLE);
         }
     }
+
     /**
      * Here er are creating bitmap of current activity and storing it into phone and shaing it via any app which support image
      */
-   /* private void takeScreenshotAndShare() {
-        if(null != drawerIcon){
-            drawerIcon.setVisibility(View.GONE);
-        }
-        if(sharingImage != null) {
-            sharingImage.setVisibility(View.GONE);
-        }
-        if(findViewById(R.id.button_edit_show_moment) != null){
-            findViewById(R.id.button_edit_show_moment).setVisibility(View.GONE);
-        }
-        String Slash = "/";
-        String jpgExtension = ".jpg";
-        String gratitudePie = "GratitudePie";
-        Date currentDate = new Date();
-        android.text.format.DateFormat.format(Constants.DATE_FORMAT, currentDate);
-        // image naming and path  to include sd card  appending name you choose for file
-        File direct =
-                new File(Environment
-                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                        .getAbsolutePath() + Slash + gratitudePie + Slash);
-
-        if (!direct.exists()) {
-            direct.mkdir();
-        }
-
-        String mPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + Slash + gratitudePie + Slash + currentDate + jpgExtension;
-        mPath = mPath.replace(Constants.SPACE_STRING, Constants.EMPTY_STRING);
-        // create bitmap screen capture
-        View v1 = getWindow().getDecorView().getRootView();
-        v1.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-        v1.setDrawingCacheEnabled(false);
-
-        File imageFile = new File(mPath);
-        imageFile.mkdir();
-        FileOutputStream outputStream;
-        try {
-            outputStream = new FileOutputStream(imageFile);
-            int totalRange = 100;
-            bitmap.compress(Bitmap.CompressFormat.PNG, totalRange, outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-
-        Uri uri = Uri.fromFile(imageFile);
-        Intent sharingIntent = new Intent();
-        sharingIntent.setAction(Intent.ACTION_SEND);
-        sharingIntent.setType("image/*");
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shared_content_subject));
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shared_content_body));
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
-    }*/
-
 
     private void takeScreenshotAndShare() {
-        if(null != drawerIcon){
+        if (null != drawerIcon) {
             drawerIcon.setVisibility(View.GONE);
         }
-        if(sharingImage != null) {
+        if (sharingImage != null) {
             sharingImage.setVisibility(View.GONE);
         }
-        if(findViewById(R.id.button_edit_show_moment) != null){
+        if (findViewById(R.id.button_edit_show_moment) != null) {
             findViewById(R.id.button_edit_show_moment).setVisibility(View.GONE);
         }
         Date now = new Date();
@@ -285,5 +237,26 @@ public class ContainerActivity extends AppCompatActivity
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+    }
+
+    private void startAlarm(boolean isNotification, boolean isRepeat) {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent;
+        PendingIntent pendingIntent;
+
+        // SET TIME HERE
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, Constants.HOUR);
+        calendar.set(Calendar.MINUTE, Constants.MINUTE);
+
+
+        myIntent = new Intent(ContainerActivity.this, AlarmNotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
+
+
+        if (!isRepeat)
+            manager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 3000, pendingIntent);
+        else
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
