@@ -16,6 +16,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -211,7 +212,7 @@ public class ContainerActivity extends AppCompatActivity
             outputStream.flush();
             outputStream.close();
 
-            Uri uri = Uri.fromFile(imageFile);
+            Uri uri = FileProvider.getUriForFile(ContainerActivity.this, BuildConfig.APPLICATION_ID + ".provider",imageFile);
             Intent sharingIntent = new Intent();
             sharingIntent.setAction(Intent.ACTION_SEND);
             sharingIntent.setType("image/*");

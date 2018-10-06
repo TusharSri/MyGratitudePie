@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_gratitude_background">
+    android:background="@color/background_color">
 
     <LinearLayout
         android:id="@+id/date_linear_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_140sdp"
         android:layout_height="@dimen/_45sdp"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@drawable/ic_top_rect"
+        android:background="@drawable/button_drawable"
         android:layout_centerHorizontal="true">
 
         <TextView
