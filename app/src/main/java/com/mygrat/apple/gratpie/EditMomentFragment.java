@@ -61,7 +61,6 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
             Manifest.permission.WRITE_CALENDAR,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_CALENDAR,
             Manifest.permission.READ_CALENDAR
     };
     private long getTimeInMili;
@@ -188,25 +187,26 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                 @Override
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
-                    ContentResolver cr = Objects.requireNonNull(getContext()).getContentResolver();
-                    ContentValues cv = new ContentValues();
-                    cv.put(CalendarContract.Events.TITLE, momentAdded);
-                    cv.put(CalendarContract.Events.DTSTART, getTimeInMili);
-                    cv.put(CalendarContract.Events.DTEND, getTimeInMili + 60 * 60 * 1000);
-                    cv.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance().getTimeZone().getID());
-                    cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
-                    ContentUris.parseId(uri);
+                    try {
+                        ContentResolver cr = Objects.requireNonNull(getContext()).getContentResolver();
+                        ContentValues cv = new ContentValues();
+                        cv.put(CalendarContract.Events.TITLE, momentAdded);
+                        cv.put(CalendarContract.Events.DTSTART, getTimeInMili);
+                        cv.put(CalendarContract.Events.DTEND, getTimeInMili + 60 * 60 * 1000);
+                        cv.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance().getTimeZone().getID());
+                        cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+                        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
+                        ContentUris.parseId(uri);
 
 /*                    Intent intent = new Intent(Intent.ACTION_INSERT)
                             .setData(CalendarContract.Events.CONTENT_URI)
@@ -217,8 +217,11 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
                     startActivity(intent);*/
 
-                    Snackbar.make(addFileButton, "Successfully Added", Snackbar.LENGTH_SHORT).show();
-                    Navigation.findNavController(addFileButton).popBackStack();
+                        Snackbar.make(addFileButton, "Successfully Added", Snackbar.LENGTH_SHORT).show();
+                        Navigation.findNavController(addFileButton).popBackStack();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }.execute();
         }
@@ -234,13 +237,14 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
         }
         return true;
     }
+
     @SuppressLint("StaticFieldLeak")
     private void updateMoment() {
         final String momentAdded = momentTextView.getText().toString().trim();
         if (momentAdded.equals("")) {
             Snackbar.make(addFileButton, R.string.please_add_your_moment_first, Snackbar.LENGTH_SHORT).show();
         } else {
-             new AsyncTask<Void, Void, Void>() {
+            new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     PieChartData pieChartData = new PieChartData(date, counter + 1, momentAdded, attachFile);
