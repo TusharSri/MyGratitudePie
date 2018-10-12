@@ -16,12 +16,13 @@
         android:gravity="center_vertical"
         android:layout_centerHorizontal="true"/>
 
-    <CalendarView
+    <LinearLayout
         android:id="@+id/calendar"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/screen_title"
-        android:layout_height="wrap_content"/>
+        android:orientation="vertical">
+    </LinearLayout>
 
     <TextView
         android:id="@+id/things_i_am_greatful_count"
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_16sdp"
         android:textColor="@android:color/white"
+        android:layout_marginTop="@dimen/_8sdp"
         android:text="@string/no_enter_on_this_day"
         android:layout_below="@+id/calendar"
         android:layout_centerHorizontal="true"/>

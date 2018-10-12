@@ -1,37 +1,34 @@
 package com.mygrat.apple.gratpie;
 
 
-import android.app.DatePickerDialog;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mygrat.apple.gratpie.Database.PieChartData;
 import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
+import java.util.Objects;
 
 import androidx.navigation.Navigation;
 
@@ -41,15 +38,18 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Dashboard Fragment where user can see calendar and choose date
  */
-public class DashboardFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class DashboardFragment extends Fragment {
 
-    private CalendarView calendarView;
     private TextView thingsIAmGreatfulForTextView;
     private int counter;
     private String currentDate;
     private String currentDateWithoutZero;
     private Bundle bundle;
     boolean doubleBackToExitPressedOnce = false;
+    private CaldroidFragment caldroidFragment;
+    private CaldroidFragment dialogCaldroidFragment;
+    final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+    private boolean isDialogOpen = false;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -65,16 +65,116 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                          int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, monthOfYear);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        calendarView.setDate(calendar.getTimeInMillis());
+        caldroidFragment = new CaldroidFragment();
+        Bundle args = new Bundle();
+        Calendar cal = Calendar.getInstance();
+        args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
+        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+        args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+        caldroidFragment.setArguments(args);
+
+        // Attach to the activity
+        FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.calendar, caldroidFragment);
+        t.commit();
+
+        // Setup listener
+        final CaldroidListener listener = new CaldroidListener() {
+
+            @Override
+            public void onSelectDate(Date date, View view) {
+
+                caldroidFragment.setTextColorForDate(R.color.caldroid_light_red, date);
+                int day = date.getDate();
+                int month = date.getMonth();
+                int year = date.getYear()+1900;
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+                int dayNumber = calendar.get(Calendar.DAY_OF_WEEK);
+                month = month+1;
+                bundle = new Bundle();
+                bundle.putString(getString(R.string.date), Constants.EMPTY_STRING + year + month + day);
+                bundle.putLong(getString(R.string.getTimeInMili), date.getTime());
+                bundle.putString(getString(R.string.formatted_date), formatter.format(date));
+                bundle.putString(getString(R.string.day), Constants.dayInWeek[dayNumber - 1]);
+                if(isDialogOpen){
+                    isDialogOpen = false;
+                    dialogCaldroidFragment.dismiss();
+                }
+                Navigation.findNavController(thingsIAmGreatfulForTextView).navigate(R.id.pieFragment, bundle);
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
+
+                String finalDate = "";
+                if(month >0 && month  <10){
+                    finalDate = year + "0" +month;
+                } else {
+                    finalDate = year +"" +month;
+                }
+
+                if(day >0 && day  <10){
+                    finalDate = finalDate + "0" +day;
+                } else {
+                    finalDate = finalDate + "" +day;
+                }
+
+                editor.putString("currentDate", finalDate);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onChangeMonth(int month, int year) {
+                String text = "month: " + month + " year: " + year;
+                /*Toast.makeText(getActivity(), text,
+                        Toast.LENGTH_SHORT).show();*/
+            }
+
+            @Override
+            public void onLongClickDate(Date date, View view) {
+               /* Toast.makeText(getActivity(),
+                        "Long click " + formatter.format(date),
+                        Toast.LENGTH_SHORT).show();*/
+            }
+
+            @Override
+            public void onCaldroidViewCreated() {
+                if (caldroidFragment.getLeftArrowButton() != null) {
+                  /*  Toast.makeText(getActivity(),
+                            "Caldroid view is created", Toast.LENGTH_SHORT)
+                            .show();*/
+                }
+            }
+
+        };
+
+        // Setup Caldroid
+        caldroidFragment.setCaldroidListener(listener);
+        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
+        thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
+        Button gotoDate = getActivity().findViewById(R.id.button_goto_date);
+        gotoDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isDialogOpen = true;
+                dialogCaldroidFragment = new CaldroidFragment();
+                dialogCaldroidFragment.setCaldroidListener(listener);
+
+                // If activity is recovered from rotation
+                final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
+
+                // Setup arguments
+                Bundle bundle = new Bundle();
+                bundle.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
+                // Setup dialogTitle
+                dialogCaldroidFragment.setArguments(bundle);
+                dialogCaldroidFragment.show(getActivity().getSupportFragmentManager(),dialogTag);
+            }
+
+
+        });
     }
 
     @Override
@@ -92,7 +192,7 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
             }
         }
         fetchDataFromDB();
-        initViews();
+
     }
 
     private void fetchDataFromDB() {
@@ -123,82 +223,6 @@ public class DashboardFragment extends Fragment implements DatePickerDialog.OnDa
         }.execute();
     }
 
-    //Initializing views here
-    private void initViews() {
-        getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
-        calendarView = getActivity().findViewById(R.id.calendar);
-        thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
-        Button gotoDate = getActivity().findViewById(R.id.button_goto_date);
-        gotoDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-                new DatePickerDialog(getContext(), DashboardFragment.this, calendar
-                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarV, int year, int month, int day) {
-                Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                String dateStr = day + "/" + month + "/" + year;
-                SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-                Date dateObj = Calendar.getInstance().getTime();
-                try {
-                    dateObj = curFormater.parse(dateStr);
-                    dateObj.setMonth(month);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                String date = df.format(dateObj);
-                calendar.set(year, month, day);
-                int dayNumber = calendar.get(Calendar.DAY_OF_WEEK);
-                month = month+1;
-                bundle = new Bundle();
-                bundle.putString(getString(R.string.date), Constants.EMPTY_STRING + year + month + day);
-                bundle.putLong(getString(R.string.getTimeInMili), calendar.getTimeInMillis());
-                bundle.putString(getString(R.string.formatted_date), date);
-                bundle.putString(getString(R.string.day), Constants.dayInWeek[dayNumber - 1]);
-                Navigation.findNavController(calendarView).navigate(R.id.pieFragment, bundle);
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
-
-                if(month >0 && month  <10){
-                    editor.putString("currentDate", Constants.EMPTY_STRING + year + "0" +month + day);
-                } else {
-                    editor.putString("currentDate", Constants.EMPTY_STRING + year + month + day);
-                }
-                editor.apply();
-            }
-        });
-
-        // If counter is not null the assign it and set date
-        if (currentDate != null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, Integer.parseInt(currentDate.substring(0,4)));
-            calendar.set(Calendar.MONTH, Integer.parseInt(currentDate.substring(4,6))-1);
-            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(currentDate.substring(6)));
-            calendarView.setDate(calendar.getTimeInMillis());
-        }
-
-        /**
-         * Setting date in calendar from date picker
-         */
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                calendarView.setDate(calendar.getTimeInMillis());
-            }
-        };
-
-    }
 }
 
 
