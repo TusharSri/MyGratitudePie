@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -50,6 +52,14 @@ public class DashboardFragment extends Fragment {
     private CaldroidFragment dialogCaldroidFragment;
     final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
     private boolean isDialogOpen = false;
+    private Date dt;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dt = new Date();
+        dt = Calendar.getInstance().getTime();
+    }
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -65,8 +75,47 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         caldroidFragment = new CaldroidFragment();
+    }
+
+    /**
+     * Save current states of the Caldroid here
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(outState);
+
+        if (caldroidFragment != null) {
+            caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+        }
+
+        if (dialogCaldroidFragment != null) {
+            dialogCaldroidFragment.saveStatesToKey(outState,
+                    "DIALOG_CALDROID_SAVED_STATE");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setCalendar();
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE);
+        currentDate = prefs.getString("currentDate", null);
+        if (currentDate != null) {
+            String month = currentDate.substring(4, 6);
+            if (month.contains("0")) {
+                month = month.replace("0", "");
+                currentDateWithoutZero = currentDate.substring(0, 4) + month + currentDate.substring(6);
+            } else {
+                currentDateWithoutZero = currentDate;
+            }
+        }
+        fetchDataFromDB();
+
+    }
+
+    private void setCalendar() {
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
@@ -86,21 +135,20 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onSelectDate(Date date, View view) {
-
-                caldroidFragment.setTextColorForDate(R.color.caldroid_light_red, date);
+                dt = date;
                 int day = date.getDate();
                 int month = date.getMonth();
-                int year = date.getYear()+1900;
+                int year = date.getYear() + 1900;
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
                 int dayNumber = calendar.get(Calendar.DAY_OF_WEEK);
-                month = month+1;
+                month = month + 1;
                 bundle = new Bundle();
                 bundle.putString(getString(R.string.date), Constants.EMPTY_STRING + year + month + day);
                 bundle.putLong(getString(R.string.getTimeInMili), date.getTime());
                 bundle.putString(getString(R.string.formatted_date), formatter.format(date));
                 bundle.putString(getString(R.string.day), Constants.dayInWeek[dayNumber - 1]);
-                if(isDialogOpen){
+                if (isDialogOpen) {
                     isDialogOpen = false;
                     dialogCaldroidFragment.dismiss();
                 }
@@ -108,16 +156,16 @@ public class DashboardFragment extends Fragment {
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
 
                 String finalDate = "";
-                if(month >0 && month  <10){
-                    finalDate = year + "0" +month;
+                if (month > 0 && month < 10) {
+                    finalDate = year + "0" + month;
                 } else {
-                    finalDate = year +"" +month;
+                    finalDate = year + "" + month;
                 }
 
-                if(day >0 && day  <10){
-                    finalDate = finalDate + "0" +day;
+                if (day > 0 && day < 10) {
+                    finalDate = finalDate + "0" + day;
                 } else {
-                    finalDate = finalDate + "" +day;
+                    finalDate = finalDate + "" + day;
                 }
 
                 editor.putString("currentDate", finalDate);
@@ -170,29 +218,12 @@ public class DashboardFragment extends Fragment {
                 bundle.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
                 // Setup dialogTitle
                 dialogCaldroidFragment.setArguments(bundle);
-                dialogCaldroidFragment.show(getActivity().getSupportFragmentManager(),dialogTag);
+                dialogCaldroidFragment.show(getActivity().getSupportFragmentManager(), dialogTag);
             }
-
-
         });
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE);
-        currentDate = prefs.getString("currentDate", null);
-        if(currentDate != null) {
-            String month = currentDate.substring(4, 6);
-            if (month.contains("0")) {
-                month = month.replace("0", "");
-                currentDateWithoutZero = currentDate.substring(0, 4) + month + currentDate.substring(6);
-            } else {
-                currentDateWithoutZero = currentDate;
-            }
-        }
-        fetchDataFromDB();
-
+        caldroidFragment.setBackgroundDrawableForDate(getActivity().getDrawable(R.drawable.red_border_dark), dt);
+        caldroidFragment.refreshView();
     }
 
     private void fetchDataFromDB() {
@@ -217,7 +248,7 @@ public class DashboardFragment extends Fragment {
             protected Void doInBackground(Void... voids) {
                 pieChartData = PieChartDatabase.getInstance(getActivity())
                         .getPieChartDao()
-                        .getPieChartData(currentDateWithoutZero);
+                        .getPieChartData(currentDate);
                 return null;
             }
         }.execute();

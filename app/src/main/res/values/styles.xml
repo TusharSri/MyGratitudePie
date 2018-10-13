@@ -52,7 +52,7 @@
     
     <style name="CaldroidDefaultDarkCalendarViewLayout">
         <item name="android:background">@color/background_color</item>
-        <item name="android:layout_marginBottom">@dimen/_16sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_20sdp</item>
     </style>
 
     <style name="CaldroidDefaultDarkMonthName" parent="CaldroidDefaultMonthName">
@@ -67,6 +67,7 @@
 
     <style name="CaldroidDefaultDarkCell" parent="CaldroidDefaultCell">
         <item name="android:background">@drawable/cell_bg_dark</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="CaldroidDefaultDarkNormalCell" parent="CaldroidDefaultDarkCell">
