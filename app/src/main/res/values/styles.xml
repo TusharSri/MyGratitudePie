@@ -30,14 +30,35 @@
         <item name="styleCaldroidNormalCell">@style/CaldroidDefaultDarkNormalCell</item>
         <item name="styleCaldroidSquareCell">@style/CaldroidDefaultDarkSquareCell</item>
         <item name="styleCaldroidGridView">@style/CaldroidDefaultDarkGridView</item>
+        <item name="styleCaldroidLeftArrow">@style/CaldroidDefaultLeftButton</item>
+        <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
     </style>
 
+    <style name="CaldroidDefaultArrowButton">
+        <item name="android:layout_width">@dimen/_10sdp</item>
+        <item name="android:layout_height">@dimen/_10sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_20sdp</item>
+    </style>
+
+    <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:background">@drawable/left_arrow</item>
+        <item name="android:layout_marginLeft">@dimen/_15sdp</item>
+    </style>
+
+    <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:background">@drawable/right_arrow</item>
+        <item name="android:layout_marginRight">@dimen/_15sdp</item>
+    </style>
+    
     <style name="CaldroidDefaultDarkCalendarViewLayout">
         <item name="android:background">@color/background_color</item>
+        <item name="android:layout_marginBottom">@dimen/_16sdp</item>
     </style>
 
     <style name="CaldroidDefaultDarkMonthName" parent="CaldroidDefaultMonthName">
-        <item name="android:textColor">@color/caldroid_white</item>
+        <item name="android:textColor">@color/caldroid_black</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CaldroidDefaultDarkGridView" parent="CaldroidDefaultGridView">
@@ -45,7 +66,6 @@
     </style>
 
     <style name="CaldroidDefaultDarkCell" parent="CaldroidDefaultCell">
-        <item name="android:textColor">@color/cell_text_color_dark</item>
         <item name="android:background">@drawable/cell_bg_dark</item>
     </style>
 
