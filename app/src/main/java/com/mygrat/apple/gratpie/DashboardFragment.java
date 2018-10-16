@@ -2,31 +2,24 @@ package com.mygrat.apple.gratpie;
 
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mygrat.apple.gratpie.Database.PieChartData;
 import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
+import com.mygrat.apple.gratpie.caldroid.CaldroidFragment;
+import com.mygrat.apple.gratpie.caldroid.CaldroidListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -222,7 +215,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        caldroidFragment.setBackgroundDrawableForDate(getActivity().getDrawable(R.drawable.red_border_dark), dt);
+        caldroidFragment.setBackgroundDrawableForDate(Objects.requireNonNull(getContext()).getResources().getDrawable(R.drawable.red_border_dark), dt);
         caldroidFragment.refreshView();
     }
 

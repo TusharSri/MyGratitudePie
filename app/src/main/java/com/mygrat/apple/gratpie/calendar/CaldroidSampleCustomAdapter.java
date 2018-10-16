@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mygrat.apple.gratpie.R;
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidGridAdapter;
+import com.mygrat.apple.gratpie.caldroid.CaldroidFragment;
+import com.mygrat.apple.gratpie.caldroid.CaldroidGridAdapter;
 
 import java.util.Map;
 
-import hirondelle.date4j.DateTime;
+import com.mygrat.apple.gratpie.caldroid.DateTime;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
@@ -65,13 +65,13 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
             tv1.setTextColor(CaldroidFragment.disabledTextColor);
             if (CaldroidFragment.disabledBackgroundDrawable == -1) {
-                cellView.setBackgroundResource(com.caldroid.R.drawable.disable_cell);
+                cellView.setBackgroundResource(com.mygrat.apple.gratpie.R.drawable.disable_cell);
             } else {
                 cellView.setBackgroundResource(CaldroidFragment.disabledBackgroundDrawable);
             }
 
             if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(com.caldroid.R.drawable.red_border_gray_bg);
+                cellView.setBackgroundResource(com.mygrat.apple.gratpie.R.drawable.red_border_gray_bg);
             }
 
         } else {
@@ -81,7 +81,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
         // Customize for selected dates
         if (selectedDates != null && selectedDates.indexOf(dateTime) != -1) {
             cellView.setBackgroundColor(resources
-                    .getColor(com.caldroid.R.color.caldroid_sky_blue));
+                    .getColor(com.mygrat.apple.gratpie.R.color.caldroid_sky_blue));
 
             tv1.setTextColor(Color.WHITE);
 
@@ -92,9 +92,9 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
         if (shouldResetDiabledView && shouldResetSelectedView) {
             // Customize for today
             if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
+                cellView.setBackgroundResource(com.mygrat.apple.gratpie.R.drawable.red_border);
             } else {
-                cellView.setBackgroundResource(com.caldroid.R.drawable.cell_bg);
+                cellView.setBackgroundResource(com.mygrat.apple.gratpie.R.drawable.cell_bg);
             }
         }
 

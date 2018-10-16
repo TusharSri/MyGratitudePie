@@ -22,6 +22,41 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="CaldroidDefault">
+        <item name="styleCaldroidViewLayout">@style/CaldroidDefaultCalendarViewLayout</item>
+        <item name="styleCaldroidLeftArrow">@style/CaldroidDefaultLeftButton</item>
+        <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
+        <item name="styleCaldroidMonthName">@style/CaldroidDefaultMonthName</item>
+        <item name="styleCaldroidGridView">@style/CaldroidDefaultGridView</item>
+        <item name="styleCaldroidNormalCell">@style/CaldroidDefaultNormalCell</item>
+        <item name="styleCaldroidSquareCell">@style/CaldroidDefaultSquareCell</item>
+        <item name="styleCaldroidWeekdayView">@style/CaldroidDefaultWeekday</item>
+    </style>
+
+    <style name="CaldroidDefaultCalendarViewLayout">
+        <item name="android:background">@color/caldroid_white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CaldroidDefaultArrowButton">
+        <item name="android:layout_width">@dimen/_9sdp</item>
+        <item name="android:layout_height">@dimen/_8sdp</item>
+        <item name="android:layout_marginTop">@dimen/_7sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_20sdp</item>
+    </style>
+
+    <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:background">@drawable/left_arrow</item>
+        <item name="android:layout_marginLeft">@dimen/_15sdp</item>
+    </style>
+
+    <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:background">@drawable/right_arrow</item>
+        <item name="android:layout_marginRight">@dimen/_15sdp</item>
+    </style>
 
     <!-- Dark theme. -->
     <style name="CaldroidTrans" parent="CaldroidDefault">
@@ -34,24 +69,9 @@
         <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
     </style>
 
-    <style name="CaldroidDefaultArrowButton">
-        <item name="android:layout_width">@dimen/_10sdp</item>
-        <item name="android:layout_height">@dimen/_10sdp</item>
-        <item name="android:layout_marginBottom">@dimen/_20sdp</item>
-    </style>
-
-    <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
-        <item name="android:background">@drawable/left_arrow</item>
-        <item name="android:layout_marginLeft">@dimen/_15sdp</item>
-    </style>
-
-    <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
-        <item name="android:background">@drawable/right_arrow</item>
-        <item name="android:layout_marginRight">@dimen/_15sdp</item>
-    </style>
-    
     <style name="CaldroidDefaultDarkCalendarViewLayout">
         <item name="android:background">@color/background_color</item>
+        <item name="android:layout_marginTop">@dimen/_20sdp</item>
         <item name="android:layout_marginBottom">@dimen/_20sdp</item>
     </style>
 
@@ -68,16 +88,67 @@
     <style name="CaldroidDefaultDarkCell" parent="CaldroidDefaultCell">
         <item name="android:background">@drawable/cell_bg_dark</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:colorActivatedHighlight">@color/caldroid_transparent</item>
+        <item name="android:colorFocusedHighlight">@color/caldroid_transparent</item>
+        <item name="android:colorPressedHighlight">@color/caldroid_transparent</item>
+        <item name="android:colorLongPressedHighlight">@color/caldroid_transparent</item>
     </style>
 
     <style name="CaldroidDefaultDarkNormalCell" parent="CaldroidDefaultDarkCell">
-        <item name="android:padding">5dp</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:background">@color/caldroid_transparent</item>
     </style>
 
-    <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell" />
+    <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell" >
+        <item name="android:colorPressedHighlight">@color/caldroid_transparent</item>
+        <item name="android:colorLongPressedHighlight">@color/caldroid_transparent</item>
+    </style>
 
 
     <style name="CaldroidDefaultDarkCell2" parent="CaldroidDefaultCell">
         <item name="android:background">@drawable/cell_bg_dark</item>
     </style>
+
+    <style name="CaldroidDefaultMonthName">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="CaldroidDefaultGridView">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:listSelector">@null</item>
+        <item name="android:background">@color/caldroid_lighter_gray</item>
+        <item name="android:horizontalSpacing">1dp</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:verticalSpacing">1dp</item>
+    </style>
+
+    <style name="CaldroidDefaultCell">
+        <item name="android:textColor">@color/cell_text_color</item>
+        <item name="android:background">@drawable/cell_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CaldroidDefaultNormalCell" parent="CaldroidDefaultCell">
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="CaldroidDefaultSquareCell" parent="CaldroidDefaultCell" />
+
+    <style name="CaldroidDefaultWeekday">
+        <item name="android:textColor">@color/caldroid_middle_gray</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
 </resources>

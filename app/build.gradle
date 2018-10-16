@@ -15,7 +15,7 @@ android {
         applicationId "com.mygrat.apple.gratpie"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 6
+        versionCode 8
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -50,7 +50,6 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'net.hockeyapp.android:HockeySDK:5.1.1'
-    implementation 'com.roomorama:caldroid:3.0.1'
     // use -ktx for Kotlin
     implementation 'android.arch.navigation:navigation-ui:1.0.0-alpha02'
     // use -ktx for Kotlin

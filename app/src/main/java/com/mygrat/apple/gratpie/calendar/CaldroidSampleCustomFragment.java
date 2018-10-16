@@ -1,7 +1,7 @@
 package com.mygrat.apple.gratpie.calendar;
 
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidGridAdapter;
+import com.mygrat.apple.gratpie.caldroid.CaldroidFragment;
+import com.mygrat.apple.gratpie.caldroid.CaldroidGridAdapter;
 
 public class CaldroidSampleCustomFragment extends CaldroidFragment {
 
