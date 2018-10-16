@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_16sdp"
         android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/_8sdp"
         android:text="@string/no_enter_on_this_day"
         android:layout_below="@+id/calendar"
         android:layout_centerHorizontal="true"/>

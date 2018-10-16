@@ -38,9 +38,7 @@ public class DashboardFragment extends Fragment {
     private TextView thingsIAmGreatfulForTextView;
     private int counter;
     private String currentDate;
-    private String currentDateWithoutZero;
     private Bundle bundle;
-    boolean doubleBackToExitPressedOnce = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
     final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
@@ -95,15 +93,6 @@ public class DashboardFragment extends Fragment {
         setCalendar();
         SharedPreferences prefs = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE);
         currentDate = prefs.getString("currentDate", null);
-        if (currentDate != null) {
-            String month = currentDate.substring(4, 6);
-            if (month.contains("0")) {
-                month = month.replace("0", "");
-                currentDateWithoutZero = currentDate.substring(0, 4) + month + currentDate.substring(6);
-            } else {
-                currentDateWithoutZero = currentDate;
-            }
-        }
         fetchDataFromDB();
 
     }
@@ -235,6 +224,8 @@ public class DashboardFragment extends Fragment {
                 } else {
                     thingsIAmGreatfulForTextView.setText("No Entry on this day");
                 }
+
+                caldroidFragment.moveToDate(dt);
             }
 
             @Override

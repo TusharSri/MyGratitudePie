@@ -40,22 +40,20 @@
     </style>
 
     <style name="CaldroidDefaultArrowButton">
-        <item name="android:layout_width">@dimen/_9sdp</item>
-        <item name="android:layout_height">@dimen/_8sdp</item>
+        <item name="android:layout_width">@dimen/_10sdp</item>
+        <item name="android:layout_height">@dimen/_12sdp</item>
         <item name="android:layout_marginTop">@dimen/_7sdp</item>
         <item name="android:layout_marginBottom">@dimen/_20sdp</item>
     </style>
 
     <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:background">@drawable/left_arrow</item>
-        <item name="android:layout_marginLeft">@dimen/_15sdp</item>
+        <item name="android:background">@drawable/ic_calendar_prev_arrow</item>
     </style>
 
     <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:background">@drawable/right_arrow</item>
-        <item name="android:layout_marginRight">@dimen/_15sdp</item>
+        <item name="android:background">@drawable/ic_calendar_next_arrow</item>
     </style>
 
     <!-- Dark theme. -->
@@ -133,12 +131,11 @@
         <item name="android:textColor">@color/cell_text_color</item>
         <item name="android:background">@drawable/cell_bg</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CaldroidDefaultNormalCell" parent="CaldroidDefaultCell">
-        <item name="android:padding">5dp</item>
     </style>
 
     <style name="CaldroidDefaultSquareCell" parent="CaldroidDefaultCell" />
