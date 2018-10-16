@@ -109,6 +109,7 @@ public class DashboardFragment extends Fragment {
 
         // Attach to the activity
         FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        t.setCustomAnimations(R.anim.move_left_in_activity,R.anim.move_right_out_activity);
         t.replace(R.id.calendar, caldroidFragment);
         t.commit();
 
