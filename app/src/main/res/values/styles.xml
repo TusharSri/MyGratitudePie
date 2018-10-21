@@ -98,8 +98,8 @@
     </style>
 
     <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell" >
-        <item name="android:colorPressedHighlight">@color/caldroid_transparent</item>
-        <item name="android:colorLongPressedHighlight">@color/caldroid_transparent</item>
+        <item name="android:colorPressedHighlight">@android:color/transparent</item>
+        <item name="android:colorLongPressedHighlight">@android:color/transparent</item>
     </style>
 
 
@@ -121,7 +121,7 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:listSelector">@null</item>
-        <item name="android:background">@color/caldroid_lighter_gray</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:horizontalSpacing">1dp</item>
         <item name="android:padding">1dp</item>
         <item name="android:verticalSpacing">1dp</item>

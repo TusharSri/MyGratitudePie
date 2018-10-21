@@ -80,6 +80,14 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (attachDesc != null && attachDesc.isEmpty()) {
+            attachDesc = getArguments().getString(Constants.MOMENT_DESCRIPTION);
+        }
+        momentTextView = getActivity().findViewById(R.id.edit_text_moment);
+        momentTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        if (attachDesc != null && !attachDesc.isEmpty()) {
+            momentTextView.setText(attachDesc);
+        }
         if (!hasPermissions(getActivity(), PERMISSIONS)) {
             ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_ALL);
         }
@@ -94,8 +102,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
 
     private void initViews() {
         Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
-        momentTextView = getActivity().findViewById(R.id.edit_text_moment);
-        momentTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+
         fileAddedPreviewImageview = getActivity().findViewById(R.id.imageview_file_added_preview);
         addFileButton = getActivity().findViewById(R.id.button_add_file);
         Button attachMomentButton = getActivity().findViewById(R.id.button_add_moment);
@@ -116,8 +123,6 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
             attachDesc = getArguments().getString(Constants.MOMENT_DESCRIPTION);
         }
         if (attachDesc != null && !attachDesc.isEmpty()) {
-            momentTextView.setText(attachDesc);
-
             Glide.with(getActivity())
                     .load(attachFile)
                     .into(fileAddedPreviewImageview);

@@ -10,12 +10,12 @@ import android.content.Context;
 /**
  * Database is created and maintained here
  */
-@Database(entities = { PieChartData.class }, version = 2 , exportSchema = false)
+@Database(entities = { PieChartData.class }, version = 3 , exportSchema = false)
 public abstract class PieChartDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "piechartdata.db";
     private static volatile PieChartDatabase instance;
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    static final Migration MIGRATION_1_2 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
