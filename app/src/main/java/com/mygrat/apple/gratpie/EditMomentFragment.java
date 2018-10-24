@@ -3,16 +3,26 @@ package com.mygrat.apple.gratpie;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.CalendarContract;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -32,11 +42,17 @@ import com.mygrat.apple.gratpie.Database.PieChartData;
 import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 
 import androidx.navigation.Navigation;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -61,7 +77,8 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
             Manifest.permission.WRITE_CALENDAR,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_CALENDAR
+            Manifest.permission.READ_CALENDAR,
+            Manifest.permission.CAMERA
     };
     private long getTimeInMili;
 
@@ -135,10 +152,8 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
 
     public void fileAttachedClicked() {
         if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent();
-            intent.setType(Constants.INPUT_TYPE);
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture_from)), PICK_IMAGE_REQUEST);
+            ;
+            startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE_REQUEST);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 Snackbar.make(addFileButton, R.string.need_pemission_to_show_pic, Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
@@ -154,6 +169,62 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    public Intent getPickImageChooserIntent() {
+
+        // Determine Uri of camera image to save.
+        Uri outputFileUri = getCaptureImageOutputUri();
+
+        List<Intent> allIntents = new ArrayList<>();
+        PackageManager packageManager = getContext().getPackageManager();
+
+        // collect all camera intents
+        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam) {
+            Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(res.activityInfo.packageName);
+            allIntents.add(intent);
+        }
+
+        // collect all gallery intents
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+        for (ResolveInfo res : listGallery) {
+            Intent intent = new Intent(galleryIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(res.activityInfo.packageName);
+            allIntents.add(intent);
+        }
+
+        // the main intent is the last in the list (fucking android) so pickup the useless one
+        Intent mainIntent = allIntents.get(allIntents.size() - 1);
+        for (Intent intent : allIntents) {
+            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
+                mainIntent = intent;
+                break;
+            }
+        }
+        allIntents.remove(mainIntent);
+
+        // Create a chooser from the main intent
+        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
+
+        // Add all other intents
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+
+        return chooserIntent;
+    }
+
+    private Uri getCaptureImageOutputUri() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+        File f = new File(mPath);
+        return Uri.fromFile(f);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -163,10 +234,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
 
             if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent();
-                    intent.setType(Constants.INPUT_TYPE);
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture_from)), PICK_IMAGE_REQUEST);
+                    startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE_REQUEST);
                 }
             }
         }
@@ -315,15 +383,23 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
             if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
                 Uri uri = data.getData();
                 attachFile = uri.toString();
+
                 fileAddedPreviewImageview.setVisibility(View.VISIBLE);
                 if (uri.toString().contains("image")) {
                     //handle image
-                    fileAddedPreviewImageview.setImageURI(uri);
+                    try {
+                        Bitmap myBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                        myBitmap = rotateImageIfRequired(myBitmap, uri);
+                        myBitmap = getResizedBitmap(myBitmap, 500);
+                        fileAddedPreviewImageview.setImageBitmap(myBitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 } else if (uri.toString().contains("video")) {
                     //handle video
                     Glide.with(getActivity())
@@ -333,4 +409,51 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
             }
         }
     }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 0) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    private Bitmap rotateImageIfRequired(Bitmap bitmap, Uri selectedImage) throws IOException {
+
+        int orientation = getOrientation(selectedImage);
+
+        if (orientation <= 0) {
+            return bitmap;
+        }
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(orientation);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+
+        return bitmap;
+    }
+
+    private int getOrientation(  Uri photoUri) {
+        Cursor cursor = getContext().getContentResolver().query(photoUri,
+                new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
+
+        if (cursor.getCount() != 1) {
+            cursor.close();
+            return -1;
+        }
+
+        cursor.moveToFirst();
+        int orientation = cursor.getInt(0);
+        cursor.close();
+        cursor = null;
+        return orientation;
+    }
+
 }
