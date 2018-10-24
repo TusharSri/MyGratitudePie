@@ -384,28 +384,29 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
-                Uri uri = data.getData();
-                attachFile = uri.toString();
+            if (requestCode == PICK_IMAGE_REQUEST && data != null) {
+                try {
+                Bitmap bitmap;
+                Uri uri = null;
+                if (data.getData() == null) {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                } else {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+                    uri = data.getData();
+                    attachFile = data.getData().toString();
+                }
 
                 fileAddedPreviewImageview.setVisibility(View.VISIBLE);
-                if (uri.toString().contains("image")) {
-                    //handle image
-                    try {
-                        Bitmap myBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
-                        myBitmap = rotateImageIfRequired(myBitmap, uri);
-                        myBitmap = getResizedBitmap(myBitmap, 500);
-                        fileAddedPreviewImageview.setImageBitmap(myBitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                //handle image
+                    if(uri != null){
+                        bitmap = rotateImageIfRequired(bitmap, uri);
                     }
-
-                } else if (uri.toString().contains("video")) {
-                    //handle video
-                    Glide.with(getActivity())
-                            .load(attachFile) // or URI/path
-                            .into(fileAddedPreviewImageview);
+                    bitmap = getResizedBitmap(bitmap, 500);
+                    fileAddedPreviewImageview.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
             }
         }
     }
@@ -440,7 +441,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
         return bitmap;
     }
 
-    private int getOrientation(  Uri photoUri) {
+    private int getOrientation(Uri photoUri) {
         Cursor cursor = getContext().getContentResolver().query(photoUri,
                 new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
 
