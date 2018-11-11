@@ -407,9 +407,24 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                         e.printStackTrace();
                     }
                 } else {
-                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+                    bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getContext()).getContentResolver(), data.getData());
+
+                    try {
+                        Date now = new Date();
+                        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+                        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+                        File imageFile = new File(mPath);
+                        FileOutputStream outputStream = new FileOutputStream(imageFile);
+                        int quality = 100;
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+                        outputStream.flush();
+                        outputStream.close();
+                        attachFile = String.valueOf(imageFile);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                     uri = data.getData();
-                    attachFile = data.getData().toString();
                 }
 
                 fileAddedPreviewImageview.setVisibility(View.VISIBLE);

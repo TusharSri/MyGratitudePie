@@ -15,12 +15,20 @@ public abstract class PieChartDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "piechartdata.db";
     private static volatile PieChartDatabase instance;
-    static final Migration MIGRATION_1_2 = new Migration(4, 5) {
+    static final Migration MIGRATION_1_2 = new Migration(3, 4) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
         }
     };
+
+    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Since we didn't alter the table, there's nothing else to do here.
+        }
+    };
+
     public static synchronized PieChartDatabase getInstance(Context context) {
         if (instance == null) {
             instance = create(context);
@@ -33,7 +41,7 @@ public abstract class PieChartDatabase extends RoomDatabase {
                 context,
                 PieChartDatabase.class,
                 DB_NAME)
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2,MIGRATION_4_5)
                 .build();
     }
 
