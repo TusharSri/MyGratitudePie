@@ -43,6 +43,7 @@ import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -390,6 +391,21 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                 Uri uri = null;
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
+
+                    try {
+                        Date now = new Date();
+                        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+                        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+                        File imageFile = new File(mPath);
+                        FileOutputStream outputStream = new FileOutputStream(imageFile);
+                        int quality = 100;
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+                        outputStream.flush();
+                        outputStream.close();
+                        attachFile = String.valueOf(imageFile);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 } else {
                     bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
                     uri = data.getData();
@@ -397,7 +413,7 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                 }
 
                 fileAddedPreviewImageview.setVisibility(View.VISIBLE);
-                //handle image
+                    //handle image
                     if(uri != null){
                         bitmap = rotateImageIfRequired(bitmap, uri);
                     }
@@ -451,7 +467,12 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
         }
 
         cursor.moveToFirst();
-        int orientation = cursor.getInt(0);
+        int orientation = 0;
+        try {
+            orientation = cursor.getInt(0);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         cursor.close();
         cursor = null;
         return orientation;
