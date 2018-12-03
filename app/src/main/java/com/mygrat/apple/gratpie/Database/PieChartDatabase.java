@@ -10,19 +10,19 @@ import android.content.Context;
 /**
  * Database is created and maintained here
  */
-@Database(entities = { PieChartData.class }, version = 5 , exportSchema = false)
+@Database(entities = { PieChartData.class }, version = 6 , exportSchema = false)
 public abstract class PieChartDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "piechartdata.db";
     private static volatile PieChartDatabase instance;
-    static final Migration MIGRATION_1_2 = new Migration(3, 4) {
+    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
         }
     };
 
-    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
@@ -41,7 +41,7 @@ public abstract class PieChartDatabase extends RoomDatabase {
                 context,
                 PieChartDatabase.class,
                 DB_NAME)
-                .addMigrations(MIGRATION_1_2,MIGRATION_4_5)
+                .addMigrations(MIGRATION_4_5,MIGRATION_5_6)
                 .build();
     }
 

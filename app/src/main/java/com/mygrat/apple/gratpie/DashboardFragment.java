@@ -139,7 +139,7 @@ public class DashboardFragment extends Fragment {
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
 
                 String finalDate = "";
-                if (month > 0 && month < 10) {
+/*                if (month > 0 && month < 10) {
                     finalDate = year + "0" + month;
                 } else {
                     finalDate = year + "" + month;
@@ -149,8 +149,9 @@ public class DashboardFragment extends Fragment {
                     finalDate = finalDate + "0" + day;
                 } else {
                     finalDate = finalDate + "" + day;
-                }
-
+                }*/
+                finalDate = year + "" + month;
+                finalDate = finalDate + "" + day;
                 editor.putString("currentDate", finalDate);
                 editor.apply();
 

@@ -52,6 +52,7 @@
     <string name="goto_date">Goto Date</string>
     <string name="authentication_failed">Authentication failed.</string>
     <string name="user_data">User_Data</string>
+    <string name="user_id">User_Id</string>
     <string name="name">name</string>
     <string name="isComingFromShowFragment">isComingFromShowFragment</string>
     <string name="counter">counter</string>
@@ -59,7 +60,7 @@
     <string name="getTimeInMili">getTimeinMili</string>
     <string name="show_image">shownImage</string>
     <string name="calender">Calender</string>
-    <string name="no_enter_on_this_day">No Enter on this day</string>
+    <string name="no_enter_on_this_day">No Entry on this day</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="hockey_api_key">47fa8f47cd334b7e84494567fce7802f</string>
     <string name="connection_failed">Connection failed</string>

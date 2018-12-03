@@ -10,6 +10,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -38,6 +39,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mygrat.apple.gratpie.Database.PieChartData;
 import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
@@ -63,6 +66,12 @@ import static android.app.Activity.RESULT_OK;
  */
 public class EditMomentFragment extends Fragment implements View.OnClickListener {
 
+    private DatabaseReference rootRef;
+    private DatabaseReference userRef;
+    private DatabaseReference dateRef;
+    private DatabaseReference counterRef;
+    private DatabaseReference momentRef;
+    private DatabaseReference urlRef;
     private EditText momentTextView;
     private ImageView fileAddedPreviewImageview;
     private Button addFileButton;
@@ -119,8 +128,11 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
     }
 
     private void initViews() {
+        SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.user_id), getContext().MODE_PRIVATE);
+        String userId = prefs.getString(getString(R.string.user_id), Constants.EMPTY_STRING);
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        userRef = rootRef.child(userId);
         Objects.requireNonNull(getActivity()).findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
-
         fileAddedPreviewImageview = getActivity().findViewById(R.id.imageview_file_added_preview);
         addFileButton = getActivity().findViewById(R.id.button_add_file);
         Button attachMomentButton = getActivity().findViewById(R.id.button_add_moment);
@@ -281,16 +293,6 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                         }
                         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
                         ContentUris.parseId(uri);
-
-/*                    Intent intent = new Intent(Intent.ACTION_INSERT)
-                            .setData(CalendarContract.Events.CONTENT_URI)
-                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getTimeInMili)
-                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getTimeInMili + 60 * 60 * 1000)
-                            .putExtra(CalendarContract.Events.TITLE, "Gratitude Pie")
-                            .putExtra(CalendarContract.Events.DESCRIPTION, momentAdded)
-                            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
-                    startActivity(intent);*/
-
                         Snackbar.make(addFileButton, "Successfully Added", Snackbar.LENGTH_SHORT).show();
                         Navigation.findNavController(addFileButton).popBackStack();
                     } catch (Exception e) {
@@ -345,6 +347,12 @@ public class EditMomentFragment extends Fragment implements View.OnClickListener
                 fileAttachedClicked();
                 break;
             case R.id.button_add_moment:
+                dateRef = userRef.child(date);
+                counterRef = dateRef.child(counter+1+"");
+                urlRef = counterRef.child("Url");
+                momentRef = counterRef.child("Moment");
+                momentRef.setValue(momentTextView.getText().toString().trim());
+                urlRef.setValue(attachFile);
                 if (isFromShow) {
                     updateMoment();
                 } else {
