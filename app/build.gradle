@@ -16,8 +16,8 @@ android {
         applicationId "com.mygrat.apple.gratpie"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 13
-        versionName "13.0"
+        versionCode 14
+        versionName "14.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
