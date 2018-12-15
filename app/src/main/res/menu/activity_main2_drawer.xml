@@ -20,6 +20,10 @@
             android:id="@+id/nav_privacy_policy"
             android:icon="@drawable/ic_privacy_policy"
             android:title="@string/privacy_policy" />
+        <item
+            android:id="@+id/nav_sync"
+            android:icon="@android:drawable/ic_popup_sync"
+            android:title="@string/sync" />
     </group>
 
 </menu>

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -30,6 +31,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.mygrat.apple.gratpie.Database.PieChartData;
+import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
 import com.mygrat.apple.gratpie.notification.AlarmNotificationReceiver;
 
@@ -46,6 +54,12 @@ public class ContainerActivity extends AppCompatActivity
 
     private ImageView drawerIcon;
     private ImageView sharingImage;
+    private DatabaseReference rootRef;
+    private DatabaseReference userRef;
+    private DatabaseReference dateRef;
+    private DatabaseReference counterRef;
+    private DatabaseReference momentRef;
+    private DatabaseReference urlRef;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -114,6 +128,9 @@ public class ContainerActivity extends AppCompatActivity
             transaction.commit();
         } else if (id == R.id.nav_privacy_policy) {
             startActivity(new Intent(getApplicationContext(), PrivacyPolicyActivity.class));
+        } else if (id == R.id.nav_sync) {
+            //Call sync
+            fetchDataFromFirebaseAndSyncDB();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -121,6 +138,76 @@ public class ContainerActivity extends AppCompatActivity
         return true;
     }
 
+    private void fetchDataFromFirebaseAndSyncDB() {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.user_id), MODE_PRIVATE);
+        String userId = prefs.getString(getString(R.string.user_id), Constants.EMPTY_STRING);
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        userRef = rootRef.child(userId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
+                    for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                        String date = dataSnapshot1.getKey();
+                        dateRef = userRef.child(date);
+                        for (int j = 1; j <= dataSnapshot1.getChildrenCount(); j++) {
+                            String momentDesc = dataSnapshot1.child(j+"").child("Moment").getValue(String.class);
+                            String urlDesc = dataSnapshot1.child(j+"").child("Url").getValue(String.class);
+                            if(null != momentDesc && !momentDesc.isEmpty()){
+                                insertIntoDb(date,j,momentDesc,urlDesc);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Do Nothing
+            }
+        });
+    }
+
+    private void insertIntoDb(final String date, final int count, final String momentDesc, final String urlDesc) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                PieChartData pieChartData = new PieChartData(date, count, momentDesc, urlDesc);
+                PieChartDatabase.getInstance(getApplicationContext())
+                        .getPieChartDao()
+                        .insert(pieChartData);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    //ContentResolver cr = getContentResolver();
+                    //ContentValues cv = new ContentValues();
+                    //cv.put(CalendarContract.Events.TITLE, momentDesc);
+                    //cv.put(CalendarContract.Events.DTSTART, getTimeInMili);
+                    //cv.put(CalendarContract.Events.DTEND, getTimeInMili + 60 * 60 * 1000);
+                    //cv.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance().getTimeZone().getID());
+                    //cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+                    //if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    //return;
+                    //}
+                    //Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
+                    //ContentUris.parseId(uri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute();
+    }
 
     @Override
     public void onBackPressed() {

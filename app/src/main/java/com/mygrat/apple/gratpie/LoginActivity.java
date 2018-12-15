@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -29,15 +28,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.mygrat.apple.gratpie.Database.PieChartData;
-import com.mygrat.apple.gratpie.Database.PieChartDatabase;
-import com.mygrat.apple.gratpie.Utils.Constants;
-
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
@@ -49,12 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ImageView icon;
-    private DatabaseReference rootRef;
-    private DatabaseReference userRef;
-    private DatabaseReference dateRef;
-    private DatabaseReference counterRef;
-    private DatabaseReference momentRef;
-    private DatabaseReference urlRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,82 +149,9 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString(getString(R.string.url), photoUrl.toString());
                             editor.putString(getString(R.string.email), email);
                             editor.apply();
-                            //start firebase sync hee
-                            fetchDataFromFirebaseAndSyncDB();
                         }
                     }
                 });
-    }
-
-    private void fetchDataFromFirebaseAndSyncDB() {
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.user_id), MODE_PRIVATE);
-        String userId = prefs.getString(getString(R.string.user_id), Constants.EMPTY_STRING);
-        rootRef = FirebaseDatabase.getInstance().getReference();
-        userRef = rootRef.child(userId);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                    for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                        String date = dataSnapshot1.getKey();
-                        dateRef = userRef.child(date);
-                        for (int j = 1; j <= dataSnapshot1.getChildrenCount(); j++) {
-                            String momentDesc = dataSnapshot1.child(j+"").child("Moment").getValue(String.class);
-                            String urlDesc = dataSnapshot1.child(j+"").child("Url").getValue(String.class);
-                            if(null != momentDesc && !momentDesc.isEmpty()){
-                                insertIntoDb(date,j,momentDesc,urlDesc);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Do Nothing
-            }
-        });
-    }
-
-    private void insertIntoDb(final String date, final int count, final String momentDesc, final String urlDesc) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                PieChartData pieChartData = new PieChartData(date, count, momentDesc, urlDesc);
-                PieChartDatabase.getInstance(getApplicationContext())
-                        .getPieChartDao()
-                        .insert(pieChartData);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                try {
-                    //ContentResolver cr = getContentResolver();
-                    //ContentValues cv = new ContentValues();
-                    //cv.put(CalendarContract.Events.TITLE, momentDesc);
-                    //cv.put(CalendarContract.Events.DTSTART, getTimeInMili);
-                    //cv.put(CalendarContract.Events.DTEND, getTimeInMili + 60 * 60 * 1000);
-                    //cv.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance().getTimeZone().getID());
-                    //cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-                    //if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    //return;
-                    //}
-                    //Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
-                    //ContentUris.parseId(uri);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.execute();
     }
 
     @Override
