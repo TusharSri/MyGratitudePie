@@ -11,10 +11,9 @@ import android.widget.TextView;
 import com.mygrat.apple.gratpie.R;
 import com.mygrat.apple.gratpie.caldroid.CaldroidFragment;
 import com.mygrat.apple.gratpie.caldroid.CaldroidGridAdapter;
+import com.mygrat.apple.gratpie.caldroid.DateTime;
 
 import java.util.Map;
-
-import com.mygrat.apple.gratpie.caldroid.DateTime;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 

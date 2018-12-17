@@ -1,71 +1,48 @@
 <resources>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">MainActivity2</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
 
     <string name="app_name">Gratitude Pie</string>
     <string name="your_daily_n_gratitude_journal">… your daily \n Gratitude Journal</string>
-    <string name="gratitude_pie">Gratitude \nPie</string>
-    <string name="create_my_gratitude_pie">Create my Gratitude Pie</string>
     <string name="attach_moments">I am Grateful for</string>
     <string name="add_moment">Done</string>
     <string name="attach_file">Attach File</string>
-    <string name="enter_your_moment">Enter Your Moment</string>
     <string name="icon">Icon</string>
-    <string name="sharing_icon">Sharing Icon</string>
     <string name="date">date</string>
-    <string name="please_click_again_to_exit">Please click BACK again to exit</string>
-    <string name="select_picture_from">Select Picture From</string>
     <string name="need_pemission_to_show_pic">Need permission to show picture</string>
     <string name="please_add_your_moment_first">Please add your grateful moment first</string>
-    <string name="moment">moment</string>
-    <string name="empty">empty</string>
     <string name="day">day</string>
     <string name="url">url</string>
     <string name="shared_content_body">This is the best daily Journal app.</string>
     <string name="shared_content_subject">Shared by My Gratitude Pie</string>
     <string name="share_via">Share via</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="or">Or</string>
-    <string name="google">Google</string>
     <string name="things_i_am_grateful_for">Things I am grateful for</string>
     <string name="formatted_date">formattedDate</string>
     <string name="login_failed">Login Failed</string>
-    <string name="title_activity_calendar_drawer">Calendar</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="do_you_want_to_edit_this_moment">Edit this moment</string>
     <string name="calendar">Calendar</string>
     <string name="connect">Connect</string>
     <string name="about_us">About Us</string>
-    <string name="help">Help</string>
     <string name="gratitude_pie_contact_team">Gratitude Pie Contact Team</string>
     <string name="goto_date">Goto Date</string>
-    <string name="authentication_failed">Authentication failed.</string>
     <string name="user_data">User_Data</string>
     <string name="user_id">User_Id</string>
     <string name="name">name</string>
     <string name="isComingFromShowFragment">isComingFromShowFragment</string>
     <string name="counter">counter</string>
-    <string name="permission_for_calendar">Need permission to add event to calendar</string>
     <string name="getTimeInMili">getTimeinMili</string>
     <string name="show_image">shownImage</string>
-    <string name="calender">Calender</string>
     <string name="no_enter_on_this_day">No Entry on this day</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="hockey_api_key">47fa8f47cd334b7e84494567fce7802f</string>
     <string name="connection_failed">Connection failed</string>
 
-    <string name="customize">Customize</string>
-    <string name="show_dialog">Show Dialog</string>
-    <string name="undo">Undo</string>
     <string name="sync">Sync</string>
 </resources>

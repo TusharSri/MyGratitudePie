@@ -18,12 +18,14 @@ android {
         targetSdkVersion 26
         versionCode 14
         versionName "14.0"
+        resConfigs "en"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
             signingConfig signingConfigs.config
         }
     }

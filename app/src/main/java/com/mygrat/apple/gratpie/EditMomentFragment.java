@@ -3,7 +3,6 @@ package com.mygrat.apple.gratpie;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -16,7 +15,6 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,10 +51,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.TimeZone;
 
 import androidx.navigation.Navigation;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 

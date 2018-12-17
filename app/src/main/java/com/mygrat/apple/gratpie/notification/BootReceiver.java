@@ -3,7 +3,6 @@ package com.mygrat.apple.gratpie.notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 /**
  * Created by azem on 11/3/17.
