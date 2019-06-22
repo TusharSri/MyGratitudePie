@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "429103805456-61cev03u3gf0304c6obu6j36dqct6p0i.apps.googleusercontent.com",
+          "client_id": "429103805456-d62ljca60v2cu1dsgi0masjnvu5q5rp7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mygrat.apple.gratpie",
-            "certificate_hash": "eb11990ea24c2a6ccab4821891f75aa238df1aa4"
+            "certificate_hash": "5615c66de6331189266d2794236f11bf3508caac"
           }
         },
         {
@@ -28,6 +28,14 @@
           "android_info": {
             "package_name": "com.mygrat.apple.gratpie",
             "certificate_hash": "7b0267342f5fcfac396324c74e4204e4c98dc05b"
+          }
+        },
+        {
+          "client_id": "429103805456-61cev03u3gf0304c6obu6j36dqct6p0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mygrat.apple.gratpie",
+            "certificate_hash": "eb11990ea24c2a6ccab4821891f75aa238df1aa4"
           }
         },
         {
@@ -41,20 +49,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "429103805456-ah0lqqu9fnpq1ujq7cntviplmnpcnc25.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

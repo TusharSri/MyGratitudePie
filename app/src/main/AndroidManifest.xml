@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -20,16 +21,19 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_app_icon"
         android:hardwareAccelerated="false"
-        android:largeHeap="true"
+        android:icon="@drawable/ic_app_icon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/ic_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SetReminderActivity" android:label="@string/set_a_reminder" android:parentActivityName=".ContainerActivity"></activity>
+
         <meta-data
             android:name="net.hockeyapp.android.appIdentifier"
             android:value="@string/hockey_api_key" />
