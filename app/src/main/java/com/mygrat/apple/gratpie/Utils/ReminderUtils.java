@@ -18,7 +18,7 @@ public class ReminderUtils {
     public static final int REMINDER_REQUEST_CODE = 111;
     public static final String REMINDER_HOUR = "reminder_hour";
     public static final String REMINDER_MINUTE = "reminder_minute";
-    public static final int DEFAULT_REMINDER_HOUR = 23;
+    public static final int DEFAULT_REMINDER_HOUR = 21;
     public static final int DEFAULT_REMINDER_MINUTE = 0;
     public static final String TAG = ReminderUtils.class.getSimpleName();
 
@@ -27,14 +27,9 @@ public class ReminderUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         int hour = sharedPreferences.getInt(REMINDER_HOUR, DEFAULT_REMINDER_HOUR);
         int minute = sharedPreferences.getInt(REMINDER_MINUTE, DEFAULT_REMINDER_MINUTE);
-        Log.i(TAG,"Hour: "+hour+" Minute: "+minute);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
-        Log.i(TAG, "Calendar: "+calendar.toString());
-        Log.i(TAG, "Calendar: "+calendar.get(Calendar.DAY_OF_MONTH)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.YEAR));
-        Log.i(TAG, "Calendar: "+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
-        Log.i(TAG, "Calendar: "+calendar.getTimeInMillis());
         setAlarm(context,calendar);
     }
 

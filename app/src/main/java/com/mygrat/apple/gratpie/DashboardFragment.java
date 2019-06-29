@@ -59,7 +59,6 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         dt = new Date();
         dt = Calendar.getInstance().getTime();
-        System.out.println("onCreate");
         selectedMonth = dt.getMonth() + 1;
         selectedYear = dt.getYear() + 1900;
     }
@@ -87,7 +86,6 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         // TODO Auto-generated method stub
-        Log.i(TAG, "onSaveInstanceState: called");
         super.onSaveInstanceState(outState);
 
         if (caldroidFragment != null) {
@@ -102,7 +100,6 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewStateRestored: called");
         super.onViewStateRestored(savedInstanceState);
         if (caldroidFragment != null)
             caldroidFragment.restoreStatesFromKey(savedInstanceState, "CALDROID_SAVED_STATE");
@@ -113,18 +110,12 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("onResume");
         SharedPreferences prefs = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE);
         currentDate = prefs.getString("currentDate", null);
-        System.out.println(currentDate);
         getGratitudeCountForMonth(dt.getMonth() + 1, dt.getYear() + 1900);
     }
 
     private void setCalendar() {
-        System.out.println("Set calendar");
-        System.out.println(dt.toString());
-        Log.i(TAG, "setCalendar: month: "+selectedMonth);
-        Log.i(TAG, "setCalendar: year: "+selectedYear);
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
@@ -181,8 +172,6 @@ public class DashboardFragment extends Fragment {
                 }*/
                 finalDate = year + "" + month;
                 finalDate = finalDate + "" + day;
-                System.out.println("Final Date: " + finalDate);
-                System.out.println(dt.toString());
                 editor.putString("currentDate", finalDate);
                 editor.apply();
 
@@ -202,7 +191,6 @@ public class DashboardFragment extends Fragment {
                 String finalDate = "";
                 finalDate = year + "" + month;
                 finalDate = finalDate + "" + day;
-                System.out.println("Final Date: " + finalDate);
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
                 editor.putString("currentDate", finalDate);
                 editor.apply();
@@ -273,13 +261,11 @@ public class DashboardFragment extends Fragment {
                 } else {
                     thingsIAmGreatfulForTextView.setText("No Entry on this day");
                 }
-                System.out.println("Moving to date: " + dt.toString());
                 caldroidFragment.moveToDate(dt);
             }
 
             @Override
             protected Void doInBackground(Void... voids) {
-                System.out.println("Current datee: " + currentDate);
                 pieChartData = PieChartDatabase.getInstance(getActivity())
                         .getPieChartDao()
                         .getPieChartData(currentDate);
@@ -296,8 +282,6 @@ public class DashboardFragment extends Fragment {
             protected Void doInBackground(Integer... args) {
                 int selectedMonth = args[0];
                 int selectedYear = args[1];
-                System.out.println("Selected month: " + selectedMonth + " year: " + selectedYear);
-                System.out.println(currentDate);
                 int currentMonth = calendar.get(Calendar.MONTH) + 1;
                 int dateCount = 0;
                 if (selectedMonth < currentMonth) {

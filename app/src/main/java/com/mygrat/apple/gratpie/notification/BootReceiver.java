@@ -20,7 +20,6 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // Your code to execute when Boot Completed
         if(intent!=null && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            Log.i(TAG, "Boot completed");
             ReminderUtils.setNotificationReminder(context);
         }
     }
