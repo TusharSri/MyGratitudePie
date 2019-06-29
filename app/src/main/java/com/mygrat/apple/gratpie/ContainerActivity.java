@@ -107,25 +107,17 @@ public class ContainerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setReminder();
+        setReminderIfFirstTime();
     }
 
-    private void setReminder() {
-        Calendar now = Calendar.getInstance();
-        Calendar reminderTime = Calendar.getInstance();
-
+    private void setReminderIfFirstTime() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int hour = sharedPreferences.getInt(ReminderUtils.REMINDER_HOUR,ReminderUtils.DEFAULT_REMINDER_HOUR);
-        int minute = sharedPreferences.getInt(ReminderUtils.REMINDER_MINUTE,ReminderUtils.DEFAULT_REMINDER_MINUTE);
-        reminderTime.set(Calendar.HOUR_OF_DAY,hour);
-        reminderTime.set(Calendar.MINUTE,minute);
-
-        if(now.getTimeInMillis()<reminderTime.getTimeInMillis()){
+        boolean isFirstAlarm = sharedPreferences.getBoolean("is_first_alarm",true);
+        if (isFirstAlarm) {
             ReminderUtils.setNotificationReminder(this);
-        }
-        else{
-            reminderTime.add(Calendar.DAY_OF_MONTH,1);
-            ReminderUtils.setNotificationReminder(this,reminderTime);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("is_first_alarm",false);
+            editor.apply();
         }
     }
 
