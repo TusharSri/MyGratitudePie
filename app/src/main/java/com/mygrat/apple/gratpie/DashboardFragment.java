@@ -193,6 +193,7 @@ public class DashboardFragment extends Fragment {
                 String text = "month: " + month + " year: " + year;
                 /*Toast.makeText(getActivity(), text,
                         Toast.LENGTH_SHORT).show();*/
+                caldroidFragment.setBackgroundDrawableForDate(null,dt);
                 dt.setMonth(month - 1);
                 dt.setYear(year - 1900);
 
