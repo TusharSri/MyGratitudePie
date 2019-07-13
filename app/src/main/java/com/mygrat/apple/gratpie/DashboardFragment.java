@@ -222,25 +222,6 @@ public class DashboardFragment extends Fragment {
         caldroidFragment.setCaldroidListener(listener);
         getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
-        Button gotoDate = getActivity().findViewById(R.id.button_goto_date);
-        gotoDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isDialogOpen = true;
-                dialogCaldroidFragment = new CaldroidFragment();
-                dialogCaldroidFragment.setCaldroidListener(listener);
-
-                // If activity is recovered from rotation
-                final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-
-                // Setup arguments
-                Bundle bundle = new Bundle();
-                bundle.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
-                // Setup dialogTitle
-                dialogCaldroidFragment.setArguments(bundle);
-                dialogCaldroidFragment.show(getActivity().getSupportFragmentManager(), dialogTag);
-            }
-        });
 
         caldroidFragment.setBackgroundDrawableForDate(Objects.requireNonNull(getContext()).getResources().getDrawable(R.drawable.red_border_dark), dt);
         caldroidFragment.refreshView();
