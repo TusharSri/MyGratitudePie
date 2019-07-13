@@ -28,8 +28,6 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
     public static final String NOTIFICATION_CHANNEL_NAME = "GRATITUDEPIE_REMINDER_CHANNEL";
     public static final String NOTIFICATION_CHANNEL_DESCRIPTION = "Reminder to create your gratitude pie";
     public static final String TAG = AlarmNotificationReceiver.class.getSimpleName();
-    private static final long TWO_MINUTES = 120000L;
-
 
     @Override
     public void onReceive(Context context, Intent intent) {

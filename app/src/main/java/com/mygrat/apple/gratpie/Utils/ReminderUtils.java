@@ -20,6 +20,7 @@ public class ReminderUtils {
     public static final String REMINDER_MINUTE = "reminder_minute";
     public static final int DEFAULT_REMINDER_HOUR = 21;
     public static final int DEFAULT_REMINDER_MINUTE = 0;
+    private static final long TWO_MINUTES = 120000L;
     public static final String TAG = ReminderUtils.class.getSimpleName();
 
     public static void setNotificationReminder(Context context){
@@ -27,10 +28,15 @@ public class ReminderUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         int hour = sharedPreferences.getInt(REMINDER_HOUR, DEFAULT_REMINDER_HOUR);
         int minute = sharedPreferences.getInt(REMINDER_MINUTE, DEFAULT_REMINDER_MINUTE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        setAlarm(context,calendar);
+        Calendar reminderTime = Calendar.getInstance();
+        reminderTime.set(Calendar.HOUR_OF_DAY, hour);
+        reminderTime.set(Calendar.MINUTE, minute);
+
+        Calendar now = Calendar.getInstance();
+        if(now.getTimeInMillis()-reminderTime.getTimeInMillis()>=TWO_MINUTES){
+            reminderTime.add(Calendar.DAY_OF_MONTH,1);
+        }
+        setAlarm(context,reminderTime);
     }
 
     public static void setNotificationReminder(Context context,Calendar time){
@@ -49,7 +55,9 @@ public class ReminderUtils {
         else{
             alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
         }
-
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putLong("next_alarm",calendar.getTimeInMillis());
+        editor.commit();
         Log.i(TAG, "Alarm set for "+calendar.getTimeInMillis());
     }
 

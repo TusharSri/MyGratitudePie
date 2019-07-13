@@ -2,19 +2,14 @@ package com.mygrat.apple.gratpie;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -26,7 +21,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,14 +37,12 @@ import com.mygrat.apple.gratpie.Database.PieChartData;
 import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
 import com.mygrat.apple.gratpie.Utils.ReminderUtils;
-import com.mygrat.apple.gratpie.notification.AlarmNotificationReceiver;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 
 public class ContainerActivity extends AppCompatActivity
@@ -107,18 +99,11 @@ public class ContainerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setReminderIfFirstTime();
+        setReminder();
     }
 
-    private void setReminderIfFirstTime() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isFirstAlarm = sharedPreferences.getBoolean("is_first_alarm",true);
-        if (isFirstAlarm) {
-            ReminderUtils.setNotificationReminder(this);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("is_first_alarm",false);
-            editor.apply();
-        }
+    private void setReminder() {
+        ReminderUtils.setNotificationReminder(this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
