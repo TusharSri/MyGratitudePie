@@ -154,7 +154,8 @@ public class CaldroidFragment extends DialogFragment {
             _MIN_DATE_TIME = "_minDateTime",
             _MAX_DATE_TIME = "_maxDateTime",
             _BACKGROUND_FOR_DATETIME_MAP = "_backgroundForDateTimeMap",
-            _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap";
+            _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap",
+            _BOLD_DATES = "_boldDates";
 
     /**
      * Initial data
@@ -167,6 +168,7 @@ public class CaldroidFragment extends DialogFragment {
     protected DateTime minDateTime;
     protected DateTime maxDateTime;
     protected ArrayList<DateTime> dateInMonthsList;
+    protected  ArrayList<DateTime> boldDates = new ArrayList<>();
 
     /**
      * caldroidData belongs to Caldroid
@@ -364,6 +366,7 @@ public class CaldroidFragment extends DialogFragment {
         caldroidData
                 .put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
         caldroidData.put(_TEXT_COLOR_FOR_DATETIME_MAP, textColorForDateTimeMap);
+        caldroidData.put(_BOLD_DATES,boldDates);
 
         return caldroidData;
     }
@@ -490,6 +493,14 @@ public class CaldroidFragment extends DialogFragment {
 
     public void setTextColorForDateTime(int textColorRes, DateTime dateTime) {
         textColorForDateTimeMap.put(dateTime, textColorRes);
+    }
+
+    public ArrayList<DateTime> getBoldDates() {
+        return boldDates;
+    }
+
+    public void setBoldDates(ArrayList<DateTime> boldDates) {
+        this.boldDates = boldDates;
     }
 
     /**
@@ -1061,7 +1072,6 @@ public class CaldroidFragment extends DialogFragment {
         for (CaldroidGridAdapter adapter : datePagerAdapters) {
             // Reset caldroid data
             adapter.setCaldroidData(getCaldroidData());
-
             // Reset extra data
             adapter.setExtraData(extraData);
 

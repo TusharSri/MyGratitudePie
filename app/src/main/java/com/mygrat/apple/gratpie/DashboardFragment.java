@@ -2,14 +2,12 @@ package com.mygrat.apple.gratpie;
 
 
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +22,7 @@ import com.mygrat.apple.gratpie.caldroid.CaldroidListener;
 import com.mygrat.apple.gratpie.caldroid.DateTime;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +46,8 @@ public class DashboardFragment extends Fragment {
     private Bundle bundle;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
-    private Map<DateTime, Drawable> dateBackgrounds = new HashMap<>();
+    private Map<DateTime, Integer> dateTextColors = new HashMap<>();
+    private ArrayList<DateTime> boldDates = new ArrayList<>();
     final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
     private boolean isDialogOpen = false;
     private Date dt;
@@ -124,7 +124,8 @@ public class DashboardFragment extends Fragment {
         args.putInt(CaldroidFragment.MONTH, selectedMonth);
         args.putInt(CaldroidFragment.YEAR, selectedYear);
         caldroidFragment.setArguments(args);
-        caldroidFragment.setBackgroundDrawableForDateTimes(dateBackgrounds);
+        caldroidFragment.setTextColorForDateTimes(dateTextColors);
+        caldroidFragment.setBoldDates(boldDates);
         // Attach to the activity
         FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         t.setCustomAnimations(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
@@ -310,16 +311,15 @@ public class DashboardFragment extends Fragment {
                 }
                 for (int i = 1; i <= dateCount; i++) {
                     String dateText = String.format("%d%d%d", selectedYear, selectedMonth, i);
-                    System.out.println("Date: " + dateText);
                     PieChartData[] pieChartData = PieChartDatabase.getInstance(getActivity()).getPieChartDao().getPieChartData(dateText);
                     if (pieChartData.length > 0) {
                         int gratitudeCount = pieChartData[pieChartData.length - 1].getCounter();
                         if (gratitudeCount > 0) {
                             DateTime dateTime = new DateTime(selectedYear, selectedMonth, i, 0, 0, 0, 0);
-                            dateBackgrounds.put(dateTime, getResources().getDrawable(R.drawable.date_background_white));
+                            dateTextColors.put(dateTime, R.color.caldroid_white);
+                            boldDates.add(dateTime);
                         }
                     }
-                    System.out.println(dateBackgrounds.toString());
                 }
                 return null;
             }
