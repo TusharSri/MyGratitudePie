@@ -47,4 +47,7 @@
     <string name="sync">Sync</string>
     <string name="set_a_reminder">Set a reminder</string>
     <string name="backup">Backup</string>
+    <string name="daily_reminder_warning"><![CDATA[
+        To ensure you are receiving daily reminders, please read <u><b>this article</b></u>.
+    ]]></string>
 </resources>

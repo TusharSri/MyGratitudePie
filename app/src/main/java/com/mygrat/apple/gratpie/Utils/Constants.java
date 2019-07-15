@@ -21,4 +21,5 @@ public class Constants {
     public static final int READ_CALENDAR = 12;
     public static final int HOUR = 21;
     public static final int MINUTE = 01;
+    public static final String DAILY_REMINDER_BLOG_URL = "https://lifethroughmybioscope.com/gratitude-pie-daily-reminder/";
 }
