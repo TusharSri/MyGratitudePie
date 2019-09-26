@@ -274,7 +274,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         // Set bold dates
         ArrayList<DateTime> boldDates = (ArrayList<DateTime>) caldroidData.get(CaldroidFragment._BOLD_DATES);
-        if(boldDates.size() >= 0){
+        if(boldDates!=null && boldDates.size() > 0){
             if(boldDates.contains(dateTime)){
                 textView.setTypeface(null,Typeface.BOLD);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,13.0f);
@@ -285,6 +285,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
     private void resetCustomResources(CellView cellView) {
         cellView.setBackgroundResource(defaultCellBackgroundRes);
         cellView.setTextColor(defaultTextColorRes);
+        cellView.setTypeface(Typeface.DEFAULT);
+        cellView.setTextSize(TypedValue.COMPLEX_UNIT_SP,11.0f);
     }
 
     /**

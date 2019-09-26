@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.mygrat.apple.gratpie.Database.PieChartData;
@@ -259,6 +258,13 @@ public class DashboardFragment extends Fragment {
     private void getGratitudeCountForMonth(int month, int year) {
         new AsyncTask<Integer, Void, Void>() {
             Calendar calendar = Calendar.getInstance();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dateTextColors.clear();
+                boldDates.clear();
+            }
 
             @Override
             protected Void doInBackground(Integer... args) {
