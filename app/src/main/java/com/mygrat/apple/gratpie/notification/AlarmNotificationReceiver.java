@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -45,7 +46,7 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.ic_app_icon)
+                .setSmallIcon(R.mipmap.ic_notification_icon)
                 .setContentTitle("My Gratitude Pie")
                 .setContentIntent(pendingIntent)
                 .setContentText("Time to create your Gratitude Pie")
