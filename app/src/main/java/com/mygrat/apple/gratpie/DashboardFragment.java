@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.mygrat.apple.gratpie.Database.PieChartData;
@@ -19,10 +18,14 @@ import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
 import com.mygrat.apple.gratpie.caldroid.CaldroidFragment;
 import com.mygrat.apple.gratpie.caldroid.CaldroidListener;
+import com.mygrat.apple.gratpie.caldroid.DateTime;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import androidx.navigation.Navigation;
@@ -35,21 +38,28 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class DashboardFragment extends Fragment {
 
+    public static final String TAG = DashboardFragment.class.getSimpleName();
     private TextView thingsIAmGreatfulForTextView;
     private int counter;
     private String currentDate;
     private Bundle bundle;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
+    private Map<DateTime, Integer> dateTextColors = new HashMap<>();
+    private ArrayList<DateTime> boldDates = new ArrayList<>();
     final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
     private boolean isDialogOpen = false;
     private Date dt;
+    private int selectedMonth;
+    private int selectedYear;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dt = new Date();
         dt = Calendar.getInstance().getTime();
+        selectedMonth = dt.getMonth() + 1;
+        selectedYear = dt.getYear() + 1900;
     }
 
     public DashboardFragment() {
@@ -88,28 +98,36 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (caldroidFragment != null)
+            caldroidFragment.restoreStatesFromKey(savedInstanceState, "CALDROID_SAVED_STATE");
+        if (dialogCaldroidFragment != null)
+            dialogCaldroidFragment.restoreStatesFromKey(savedInstanceState, "DIALOG_CALDROID_SAVED_STATE");
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        setCalendar();
         SharedPreferences prefs = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE);
         currentDate = prefs.getString("currentDate", null);
-        fetchDataFromDB();
-
+        getGratitudeCountForMonth(dt.getMonth() + 1, dt.getYear() + 1900);
     }
 
     private void setCalendar() {
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
-        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
         args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+        args.putInt(CaldroidFragment.MONTH, selectedMonth);
+        args.putInt(CaldroidFragment.YEAR, selectedYear);
         caldroidFragment.setArguments(args);
-
+        caldroidFragment.setTextColorForDateTimes(dateTextColors);
+        caldroidFragment.setBoldDates(boldDates);
         // Attach to the activity
         FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-        t.setCustomAnimations(R.anim.move_left_in_activity,R.anim.move_right_out_activity);
+        t.setCustomAnimations(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
         t.replace(R.id.calendar, caldroidFragment);
         t.commit();
 
@@ -119,6 +137,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onSelectDate(Date date, View view) {
                 dt = date;
+                selectedMonth = date.getMonth()+1;
+                selectedYear = date.getYear()+1900;
                 int day = date.getDate();
                 int month = date.getMonth();
                 int year = date.getYear() + 1900;
@@ -162,6 +182,21 @@ public class DashboardFragment extends Fragment {
                 String text = "month: " + month + " year: " + year;
                 /*Toast.makeText(getActivity(), text,
                         Toast.LENGTH_SHORT).show();*/
+                caldroidFragment.setBackgroundDrawableForDate(null,dt);
+                dt.setMonth(month - 1);
+                dt.setYear(year - 1900);
+
+                int day = dt.getDate();
+
+                String finalDate = "";
+                finalDate = year + "" + month;
+                finalDate = finalDate + "" + day;
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
+                editor.putString("currentDate", finalDate);
+                editor.apply();
+                currentDate = finalDate;
+
+                getGratitudeCountForMonth(month, year);
             }
 
             @Override
@@ -186,25 +221,6 @@ public class DashboardFragment extends Fragment {
         caldroidFragment.setCaldroidListener(listener);
         getActivity().findViewById(R.id.sharing_imageview).setVisibility(View.GONE);
         thingsIAmGreatfulForTextView = getActivity().findViewById(R.id.things_i_am_greatful_count);
-        Button gotoDate = getActivity().findViewById(R.id.button_goto_date);
-        gotoDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isDialogOpen = true;
-                dialogCaldroidFragment = new CaldroidFragment();
-                dialogCaldroidFragment.setCaldroidListener(listener);
-
-                // If activity is recovered from rotation
-                final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-
-                // Setup arguments
-                Bundle bundle = new Bundle();
-                bundle.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidTrans);
-                // Setup dialogTitle
-                dialogCaldroidFragment.setArguments(bundle);
-                dialogCaldroidFragment.show(getActivity().getSupportFragmentManager(), dialogTag);
-            }
-        });
 
         caldroidFragment.setBackgroundDrawableForDate(Objects.requireNonNull(getContext()).getResources().getDrawable(R.drawable.red_border_dark), dt);
         caldroidFragment.refreshView();
@@ -226,7 +242,6 @@ public class DashboardFragment extends Fragment {
                 } else {
                     thingsIAmGreatfulForTextView.setText("No Entry on this day");
                 }
-
                 caldroidFragment.moveToDate(dt);
             }
 
@@ -240,6 +255,70 @@ public class DashboardFragment extends Fragment {
         }.execute();
     }
 
+    private void getGratitudeCountForMonth(int month, int year) {
+        new AsyncTask<Integer, Void, Void>() {
+            Calendar calendar = Calendar.getInstance();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dateTextColors.clear();
+                boldDates.clear();
+            }
+
+            @Override
+            protected Void doInBackground(Integer... args) {
+                int selectedMonth = args[0];
+                int selectedYear = args[1];
+                int currentMonth = calendar.get(Calendar.MONTH) + 1;
+                int dateCount = 0;
+                if (selectedMonth < currentMonth) {
+                    switch (selectedMonth) {
+                        case 1:
+                        case 3:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 10:
+                        case 12:
+                            dateCount = 31;
+                            break;
+                        case 2:
+                            if (selectedYear % 400 == 0 || (selectedYear % 4 == 0 && selectedYear % 100 == 0)) {
+                                dateCount = 29;
+                            } else {
+                                dateCount = 28;
+                            }
+                            break;
+                        default:
+                            dateCount = 30;
+                    }
+                } else {
+                    dateCount = calendar.get(Calendar.DAY_OF_MONTH);
+                }
+                for (int i = 1; i <= dateCount; i++) {
+                    String dateText = String.format("%d%d%d", selectedYear, selectedMonth, i);
+                    PieChartData[] pieChartData = PieChartDatabase.getInstance(getActivity()).getPieChartDao().getPieChartData(dateText);
+                    if (pieChartData.length > 0) {
+                        int gratitudeCount = pieChartData[pieChartData.length - 1].getCounter();
+                        if (gratitudeCount > 0) {
+                            DateTime dateTime = new DateTime(selectedYear, selectedMonth, i, 0, 0, 0, 0);
+                            dateTextColors.put(dateTime, R.color.caldroid_white);
+                            boldDates.add(dateTime);
+                        }
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                setCalendar();
+                fetchDataFromDB();
+            }
+        }.execute(month, year);
+    }
 }
 
 

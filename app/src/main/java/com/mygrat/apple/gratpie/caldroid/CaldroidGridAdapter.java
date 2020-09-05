@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.TypedValue;
@@ -34,6 +36,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected Context context;
     protected ArrayList<DateTime> disableDates;
     protected ArrayList<DateTime> selectedDates;
+    protected ArrayList<DateTime> boldDates;
 
     // Use internally, to make the search for date faster instead of using
     // indexOf methods on ArrayList
@@ -106,6 +109,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
     public void setSelectedDates(ArrayList<DateTime> selectedDates) {
         this.selectedDates = selectedDates;
     }
+
+
 
     public int getThemeResource() {
         return themeResource;
@@ -266,11 +271,22 @@ public class CaldroidGridAdapter extends BaseAdapter {
                 textView.setTextColor(resources.getColor(textColorResource));
             }
         }
+
+        // Set bold dates
+        ArrayList<DateTime> boldDates = (ArrayList<DateTime>) caldroidData.get(CaldroidFragment._BOLD_DATES);
+        if(boldDates!=null && boldDates.size() > 0){
+            if(boldDates.contains(dateTime)){
+                textView.setTypeface(null,Typeface.BOLD);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,13.0f);
+            }
+        }
     }
 
     private void resetCustomResources(CellView cellView) {
         cellView.setBackgroundResource(defaultCellBackgroundRes);
         cellView.setTextColor(defaultTextColorRes);
+        cellView.setTypeface(Typeface.DEFAULT);
+        cellView.setTextSize(TypedValue.COMPLEX_UNIT_SP,11.0f);
     }
 
     /**
@@ -317,6 +333,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
             cellView.addCustomState(CellView.STATE_SELECTED);
         }
+
 
         cellView.refreshDrawableState();
 

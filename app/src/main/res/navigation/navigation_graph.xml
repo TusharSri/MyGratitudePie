@@ -27,19 +27,19 @@
             app:destination="@id/editMomentFragment" />
         <argument
             android:name="date"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="formattedDate"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="day"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="moment_desc"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="moment_attach_file"
-            app:type="string" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showMomentFragment"
@@ -51,19 +51,19 @@
             app:destination="@id/editMomentFragment" />
         <argument
             android:name="date"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="formattedDate"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="day"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="moment_desc"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="moment_attach_file"
-            app:type="string" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/editMomentFragment"
@@ -75,13 +75,13 @@
             app:destination="@id/pieFragment" />
         <argument
             android:name="formattedDate"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="day"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="date"
-            app:type="string" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showImageFragment"
@@ -90,7 +90,7 @@
         tools:layout="@layout/fragment_show_image" >
         <argument
             android:name="shownImage"
-            app:type="string" />
+            app:argType="string" />
     </fragment>
 
     <fragment

@@ -2,9 +2,6 @@ package com.mygrat.apple.gratpie;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,7 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -39,14 +36,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.mygrat.apple.gratpie.Database.PieChartData;
 import com.mygrat.apple.gratpie.Database.PieChartDatabase;
 import com.mygrat.apple.gratpie.Utils.Constants;
-import com.mygrat.apple.gratpie.notification.AlarmNotificationReceiver;
+import com.mygrat.apple.gratpie.Utils.ReminderUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 
 public class ContainerActivity extends AppCompatActivity
@@ -72,7 +68,7 @@ public class ContainerActivity extends AppCompatActivity
         setContentView(R.layout.activity_container);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        getSupportActionBar().hide();
 
         SharedPreferences.Editor editor = getSharedPreferences(Constants.CURRENT_DATE_PREF, MODE_PRIVATE).edit();
         editor.putString("currentDate", new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()));
@@ -103,7 +99,11 @@ public class ContainerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        startAlarm(true, true);
+        setReminder();
+    }
+
+    private void setReminder() {
+        ReminderUtils.setNotificationReminder(this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -115,7 +115,11 @@ public class ContainerActivity extends AppCompatActivity
         if (id == R.id.nav_calendar) {
             startActivity(new Intent(this, ContainerActivity.class));
             finish();
-        } else if (id == R.id.nav_connect) {
+        }
+        else if(id == R.id.nav_set_reminder){
+            Intent intent = new Intent(ContainerActivity.this,SetReminderActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_connect) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MAIL_TO + Constants.EMAIL_ID));
             intent.putExtra(Intent.EXTRA_SUBJECT, R.string.gratitude_pie_contact_team);
             intent.putExtra(Intent.EXTRA_TEXT, Constants.EMPTY_STRING);
@@ -147,14 +151,14 @@ public class ContainerActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                    for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         String date = dataSnapshot1.getKey();
                         dateRef = userRef.child(date);
                         for (int j = 1; j <= dataSnapshot1.getChildrenCount(); j++) {
-                            String momentDesc = dataSnapshot1.child(j+"").child("Moment").getValue(String.class);
-                            String urlDesc = dataSnapshot1.child(j+"").child("Url").getValue(String.class);
-                            if(null != momentDesc && !momentDesc.isEmpty()){
-                                insertIntoDb(date,j,momentDesc,urlDesc);
+                            String momentDesc = dataSnapshot1.child(j + "").child("Moment").getValue(String.class);
+                            String urlDesc = dataSnapshot1.child(j + "").child("Url").getValue(String.class);
+                            if (null != momentDesc && !momentDesc.isEmpty()) {
+                                insertIntoDb(date, j, momentDesc, urlDesc);
                             }
                         }
                     }
@@ -299,7 +303,7 @@ public class ContainerActivity extends AppCompatActivity
             outputStream.flush();
             outputStream.close();
 
-            Uri uri = FileProvider.getUriForFile(ContainerActivity.this, BuildConfig.APPLICATION_ID + ".provider",imageFile);
+            Uri uri = FileProvider.getUriForFile(ContainerActivity.this, BuildConfig.APPLICATION_ID + ".provider", imageFile);
             Intent sharingIntent = new Intent();
             sharingIntent.setAction(Intent.ACTION_SEND);
             sharingIntent.setType("image/*");
@@ -325,26 +329,5 @@ public class ContainerActivity extends AppCompatActivity
                     REQUEST_EXTERNAL_STORAGE
             );
         }
-    }
-
-    private void startAlarm(boolean isNotification, boolean isRepeat) {
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent myIntent;
-        PendingIntent pendingIntent;
-
-        // SET TIME HERE
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, Constants.HOUR);
-        calendar.set(Calendar.MINUTE, Constants.MINUTE);
-
-
-        myIntent = new Intent(ContainerActivity.this, AlarmNotificationReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
-
-
-        if (!isRepeat)
-            manager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 3000, pendingIntent);
-        else
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }

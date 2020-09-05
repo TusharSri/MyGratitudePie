@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="reminder_icon_width">120dp</dimen>
+    <dimen name="reminder_icon_height">120dp</dimen>
+    <dimen name="set_reminder_text_size">18sp</dimen>
+    <dimen name="reminder_icon_margin_top">32dp</dimen>
+</resources>

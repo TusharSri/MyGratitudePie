@@ -23,11 +23,12 @@
         <LinearLayout
             android:id="@+id/calendar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_280sdp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/screen_title"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="36dp"
             android:orientation="vertical"></LinearLayout>
 
         <TextView
@@ -39,20 +40,6 @@
             android:text="@string/no_enter_on_this_day"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_16sdp" />
-
-        <Button
-            android:id="@+id/button_goto_date"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/things_i_am_greatful_count"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="70dp"
-            android:background="@drawable/button_drawable"
-            android:text="@string/goto_date"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
 
     </RelativeLayout>
 </ScrollView>
